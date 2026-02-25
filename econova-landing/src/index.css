@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-primary text-ghost font-sans;
+  }
+}
+
+/* Global Noise Overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+}
+
+/* Magnetic Button Base */
+.magnetic-btn {
+  @apply relative overflow-hidden inline-flex items-center justify-center transition-transform duration-300;
+  will-change: transform;
+}
+.magnetic-btn:hover {
+  transform: scale(1.03);
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.magnetic-btn span.hover-bg {
+  @apply absolute inset-0 bg-white/20 translate-y-full transition-transform duration-300 ease-out;
+}
+.magnetic-btn:hover span.hover-bg {
+  @apply translate-y-0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A14;
+}
+::-webkit-scrollbar-thumb {
+  background: #18181B;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7B61FF;
+}
