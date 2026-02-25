@@ -37,7 +37,7 @@ const Navbar = () => {
                         </a>
                     </div>
                 </div>
-                <a href="#philosophy" className="hover:text-white transition-colors">Filosofia</a>
+                <a href="#philosophy" className="hover:text-white transition-colors">About Us</a>
                 <a href="#protocol" className="hover:text-white transition-colors">Protocollo</a>
             </div>
             <button className="magnetic-btn bg-accent text-white px-6 py-2.5 rounded-[2rem] text-sm font-semibold relative hidden md:block group border border-accent/50 hover:border-accent">
