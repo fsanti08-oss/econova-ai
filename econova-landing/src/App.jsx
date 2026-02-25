@@ -16,8 +16,8 @@ const Navbar = () => {
 
     return (
         <nav className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-[3rem] px-8 py-4 flex items-center justify-between gap-12 border ${scrolled ? 'bg-[#0A0A14]/80 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-transparent border-transparent'} w-[90%] md:w-auto`}>
-            <a href="https://www.econova.ai/" className="text-xl font-bold font-heading tracking-tight text-white flex items-center gap-2 relative z-20 cursor-pointer">
-                ECONOVA<span className="text-accent">-AI</span>
+            <a href="https://www.econova.ai/" className="relative z-20 cursor-pointer flex items-center">
+                <img src="https://static1.squarespace.com/static/65db0e46e48ddc280efd4555/t/67ba645790c775229d169054/1740268632220/LOGO+ultimo.png" alt="ECONOVA-AI Logo" className="h-8 md:h-10 object-contain" />
             </a>
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-ghost/80">
                 <div className="group relative cursor-pointer flex items-center gap-1 hover:text-white transition-colors py-2">
@@ -49,14 +49,13 @@ const Navbar = () => {
                     </div>
                 </div>
                 <a href="https://www.econova.ai/aboutus" className="hover:text-white transition-colors">About Us</a>
-                <a href="#protocol" className="hover:text-white transition-colors">Protocollo</a>
                 <a href="https://www.econova.ai/blog-1-1" className="hover:text-white transition-colors">Blog</a>
                 <a href="https://www.econova.ai/events" className="hover:text-white transition-colors">Eventi</a>
             </div>
-            <button className="magnetic-btn bg-accent text-white px-6 py-2.5 rounded-[2rem] text-sm font-semibold relative hidden md:block group border border-accent/50 hover:border-accent">
+            <a href="https://www.econova.ai/contacts" className="magnetic-btn bg-accent text-white px-6 py-2.5 rounded-[2rem] text-sm font-semibold relative hidden md:block group border border-accent/50 hover:border-accent">
                 <span className="relative z-10">Prenota Demo</span>
                 <span className="hover-bg bg-white/20"></span>
-            </button>
+            </a>
         </nav>
     );
 };
@@ -487,10 +486,10 @@ const CTASection = () => {
                 <h2 className="text-5xl md:text-7xl font-heading font-bold text-white mb-8 tracking-tighter">Pronto a trasformare il tuo ecosistema?</h2>
                 <p className="text-xl text-ghost/50 mb-12 max-w-2xl font-light">L'intelligenza artificiale non è il futuro, è l'infrastruttura del presente. Prenota una demo interattiva per ECAI-BUDGET o ECAI-VSME.</p>
 
-                <button className="magnetic-btn bg-white text-darkText px-12 py-5 rounded-[4rem] text-xl font-bold flex items-center gap-4 group hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-shadow">
+                <a href="https://www.econova.ai/contacts" className="magnetic-btn bg-white text-darkText px-12 py-5 rounded-[4rem] text-xl font-bold flex items-center gap-4 group hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-shadow">
                     <span className="relative z-10 flex items-center gap-2">Contattaci per una Demo <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" /></span>
                     <span className="hover-bg bg-accent"></span>
-                </button>
+                </a>
             </div>
         </section>
     );
@@ -502,8 +501,8 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-16 md:gap-8 border-b border-white/10 pb-16">
 
                 <div className="flex flex-col gap-6 max-w-xs">
-                    <a href="https://www.econova.ai/" className="text-3xl font-bold font-heading tracking-tight text-white flex items-center gap-2 cursor-pointer">
-                        ECONOVA<span className="text-accent">-AI</span>
+                    <a href="https://www.econova.ai/" className="cursor-pointer flex items-center">
+                        <img src="https://static1.squarespace.com/static/65db0e46e48ddc280efd4555/t/67ba645790c775229d169054/1740268632220/LOGO+ultimo.png" alt="ECONOVA-AI Logo" className="h-10 object-contain" />
                     </a>
                     <p className="text-ghost/40 text-sm leading-relaxed">Sustainable AI solutions for SMEs. Intelligenza artificiale applicata al mondo reale, con standard di livello enterprise.</p>
                     <div className="flex items-center gap-2 text-xs font-mono bg-white/5 border border-white/10 px-4 py-2 rounded-full w-fit mt-4">
