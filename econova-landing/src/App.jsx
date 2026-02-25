@@ -16,29 +16,42 @@ const Navbar = () => {
 
     return (
         <nav className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-[3rem] px-8 py-4 flex items-center justify-between gap-12 border ${scrolled ? 'bg-[#0A0A14]/80 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-transparent border-transparent'} w-[90%] md:w-auto`}>
-            <div className="text-xl font-bold font-heading tracking-tight text-white flex items-center gap-2 relative z-20">
+            <a href="https://www.econova.ai/" className="text-xl font-bold font-heading tracking-tight text-white flex items-center gap-2 relative z-20 cursor-pointer">
                 ECONOVA<span className="text-accent">-AI</span>
-            </div>
+            </a>
             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-ghost/80">
                 <div className="group relative cursor-pointer flex items-center gap-1 hover:text-white transition-colors py-2">
                     Servizi <ChevronDown className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-transform group-hover:rotate-180" />
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-[#0A0A14]/95 backdrop-blur-xl border border-white/10 rounded-[2rem] p-4 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all translate-y-4 group-hover:translate-y-0 min-w-[240px] flex flex-col gap-1 shadow-2xl">
-                        <a href="#" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
+                    {/* Invisible bridge to prevent hover loss */}
+                    <div className="absolute top-[100%] left-0 w-full h-4"></div>
+                    <div className="absolute top-[100%] pt-2 left-1/2 -translate-x-1/2 bg-[#0A0A14]/95 backdrop-blur-xl border border-white/10 rounded-[2rem] p-4 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all translate-y-4 group-hover:translate-y-0 min-w-[280px] flex flex-col gap-1 shadow-2xl">
+                        <a href="https://www.econova.ai/controllo-di-gestione" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
                             <span>ECAI-BUDGET</span>
                             <Activity className="w-4 h-4 text-accent" />
                         </a>
-                        <a href="#" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
-                            <span>ECAI-VSME</span>
+                        <a href="https://www.econova.ai/vsme-csrd" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
+                            <span>ECAI-VSME (Bilancio ESG)</span>
                             <CircleDot className="w-4 h-4 text-accent" />
                         </a>
+                        <a href="https://www.econova.ai/edge-solutions" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
+                            <span>Edge Solutions</span>
+                        </a>
+                        <a href="https://www.econova.ai/ai-workstations" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
+                            <span>AI Workstations</span>
+                        </a>
+                        <a href="https://www.econova.ai/formazione-ai" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
+                            <span>Formazione AI</span>
+                        </a>
                         <div className="h-px bg-white/10 my-1 mx-2"></div>
-                        <a href="#" className="px-4 py-2 hover:bg-white/5 text-white/50 text-xs rounded-xl transition-colors text-center uppercase tracking-widest">
+                        <a href="https://www.econova.ai" className="px-4 py-2 hover:bg-white/5 text-white/50 text-xs rounded-xl transition-colors text-center uppercase tracking-widest">
                             Tutti i servizi
                         </a>
                     </div>
                 </div>
-                <a href="#philosophy" className="hover:text-white transition-colors">About Us</a>
+                <a href="https://www.econova.ai/aboutus" className="hover:text-white transition-colors">About Us</a>
                 <a href="#protocol" className="hover:text-white transition-colors">Protocollo</a>
+                <a href="https://www.econova.ai/blog-1-1" className="hover:text-white transition-colors">Blog</a>
+                <a href="https://www.econova.ai/events" className="hover:text-white transition-colors">Eventi</a>
             </div>
             <button className="magnetic-btn bg-accent text-white px-6 py-2.5 rounded-[2rem] text-sm font-semibold relative hidden md:block group border border-accent/50 hover:border-accent">
                 <span className="relative z-10">Prenota Demo</span>
@@ -460,7 +473,7 @@ const Protocollo = () => {
                     </svg>
                 </div>
             </div>
-        </section>
+        </section >
     );
 };
 
@@ -489,9 +502,9 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-16 md:gap-8 border-b border-white/10 pb-16">
 
                 <div className="flex flex-col gap-6 max-w-xs">
-                    <div className="text-3xl font-bold font-heading tracking-tight text-white flex items-center gap-2">
+                    <a href="https://www.econova.ai/" className="text-3xl font-bold font-heading tracking-tight text-white flex items-center gap-2 cursor-pointer">
                         ECONOVA<span className="text-accent">-AI</span>
-                    </div>
+                    </a>
                     <p className="text-ghost/40 text-sm leading-relaxed">Sustainable AI solutions for SMEs. Intelligenza artificiale applicata al mondo reale, con standard di livello enterprise.</p>
                     <div className="flex items-center gap-2 text-xs font-mono bg-white/5 border border-white/10 px-4 py-2 rounded-full w-fit mt-4">
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>
@@ -499,20 +512,22 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="flex gap-16 md:gap-24">
+                <div className="flex gap-16 md:gap-24 flex-wrap">
                     <div className="flex flex-col gap-4">
-                        <div className="text-xs uppercase tracking-widest font-mono text-ghost/30 mb-2">Piattaforma</div>
-                        <a href="#" className="text-sm text-ghost/70 hover:text-white transition-colors">ECAI-BUDGET</a>
-                        <a href="#" className="text-sm text-ghost/70 hover:text-white transition-colors">ECAI-VSME</a>
-                        <a href="#" className="text-sm text-ghost/70 hover:text-white transition-colors">AI Workstations</a>
-                        <a href="#" className="text-sm text-ghost/70 hover:text-white transition-colors">Edge Solutions</a>
+                        <div className="text-xs uppercase tracking-widest font-mono text-ghost/30 mb-2">Piattaforma e Servizi</div>
+                        <a href="https://www.econova.ai/controllo-di-gestione" className="text-sm text-ghost/70 hover:text-white transition-colors">ECAI-BUDGET</a>
+                        <a href="https://www.econova.ai/vsme-csrd" className="text-sm text-ghost/70 hover:text-white transition-colors">ECAI-VSME (Bilancio ESG)</a>
+                        <a href="https://www.econova.ai/edge-solutions" className="text-sm text-ghost/70 hover:text-white transition-colors">Edge Solutions</a>
+                        <a href="https://www.econova.ai/ai-workstations" className="text-sm text-ghost/70 hover:text-white transition-colors">AI Workstations</a>
+                        <a href="https://www.econova.ai/formazione-ai" className="text-sm text-ghost/70 hover:text-white transition-colors">Formazione AI</a>
                     </div>
                     <div className="flex flex-col gap-4">
                         <div className="text-xs uppercase tracking-widest font-mono text-ghost/30 mb-2">Azienda</div>
-                        <a href="#" className="text-sm text-ghost/70 hover:text-white transition-colors">Chi Siamo</a>
-                        <a href="#" className="text-sm text-ghost/70 hover:text-white transition-colors">Ricerca</a>
-                        <a href="#" className="text-sm text-ghost/70 hover:text-white transition-colors">Eventi & Blog</a>
-                        <a href="#" className="text-sm text-ghost/70 hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="https://www.econova.ai/aboutus" className="text-sm text-ghost/70 hover:text-white transition-colors">About Us</a>
+                        <a href="https://www.econova.ai/blog-1-1" className="text-sm text-ghost/70 hover:text-white transition-colors">Blog & News</a>
+                        <a href="https://www.econova.ai/events" className="text-sm text-ghost/70 hover:text-white transition-colors">Eventi</a>
+                        <a href="https://www.econova.ai/privacy" className="text-sm text-ghost/70 hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="https://www.econova.ai/contacts" className="text-sm text-ghost/70 hover:text-white transition-colors">Contattaci</a>
                     </div>
                 </div>
             </div>
