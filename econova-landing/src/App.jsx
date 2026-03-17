@@ -1,12 +1,14 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, ChevronDown, Activity, CircleDot, MousePointer2, Play, Lock } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, BarChart3, FileText, Shield, Zap, TrendingUp, PieChart, Leaf, Target, ChevronRight, Menu, X } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* ─── NAVBAR ─── */
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -15,272 +17,159 @@ const Navbar = () => {
     }, []);
 
     return (
-        <nav className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-[3rem] px-8 py-4 flex items-center justify-between gap-12 border ${scrolled ? 'bg-[#0A0A14]/80 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-transparent border-transparent'} w-[90%] md:w-auto`}>
-            <a href="https://www.econova.ai/" className="relative z-20 cursor-pointer flex items-center">
-                <img src="https://static1.squarespace.com/static/65db0e46e48ddc280efd4555/t/67ba645790c775229d169054/1740268632220/LOGO+ultimo.png" alt="ECONOVA-AI Logo" className="h-8 md:h-10 object-contain" />
-            </a>
-            <div className="hidden md:flex items-center gap-8 text-sm font-medium text-ghost/80">
-                <div className="group relative cursor-pointer flex items-center gap-1 hover:text-white transition-colors py-2">
-                    Servizi <ChevronDown className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-transform group-hover:rotate-180" />
-                    {/* Invisible bridge to prevent hover loss */}
-                    <div className="absolute top-[100%] left-0 w-full h-4"></div>
-                    <div className="absolute top-[100%] pt-2 left-1/2 -translate-x-1/2 bg-[#0A0A14]/95 backdrop-blur-xl border border-white/10 rounded-[2rem] p-4 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all translate-y-4 group-hover:translate-y-0 min-w-[280px] flex flex-col gap-1 shadow-2xl">
-                        <a href="https://www.econova.ai/controllo-di-gestione" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
-                            <span>ECAI-BUDGET</span>
-                            <Activity className="w-4 h-4 text-accent" />
-                        </a>
-                        <a href="https://www.econova.ai/vsme-csrd" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
-                            <span>ECAI-VSME (Bilancio ESG)</span>
-                            <CircleDot className="w-4 h-4 text-accent" />
-                        </a>
-                        <a href="https://www.econova.ai/edge-solutions" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
-                            <span>Edge Solutions</span>
-                        </a>
-                        <a href="https://www.econova.ai/ai-workstations" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
-                            <span>AI Workstations</span>
-                        </a>
-                        <a href="https://www.econova.ai/formazione-ai" className="px-4 py-3 hover:bg-white/5 text-white rounded-xl transition-colors flex items-center justify-between">
-                            <span>Formazione AI</span>
-                        </a>
-                        <div className="h-px bg-white/10 my-1 mx-2"></div>
-                        <a href="https://www.econova.ai" className="px-4 py-2 hover:bg-white/5 text-white/50 text-xs rounded-xl transition-colors text-center uppercase tracking-widest">
-                            Tutti i servizi
-                        </a>
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 backdrop-blur-xl border-b border-black/[0.04] shadow-soft' : 'bg-transparent'}`}>
+            <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
+                <a href="#" className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+                        <span className="text-white text-sm font-bold">E</span>
                     </div>
+                    <span className="text-lg font-bold tracking-tight text-dark">
+                        ECONOVA<span className="text-accent">AI</span>
+                    </span>
+                </a>
+
+                <div className="hidden md:flex items-center gap-10 text-sm font-medium text-muted">
+                    <a href="#budget" className="hover:text-dark transition-colors">ECAI-Budget</a>
+                    <a href="#vsme" className="hover:text-dark transition-colors">Report VSME</a>
+                    <a href="#dashboard" className="hover:text-dark transition-colors">Dashboard</a>
+                    <a href="#contact" className="btn-primary !px-6 !py-2.5 !text-sm">
+                        Prenota Demo
+                    </a>
                 </div>
-                <a href="https://www.econova.ai/aboutus" className="hover:text-white transition-colors">About Us</a>
-                <a href="https://www.econova.ai/blog-1-1" className="hover:text-white transition-colors">Blog</a>
-                <a href="https://www.econova.ai/events" className="hover:text-white transition-colors">Eventi</a>
+
+                <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden p-2">
+                    {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                </button>
             </div>
-            <a href="https://www.econova.ai/contacts" className="magnetic-btn bg-accent text-white px-6 py-2.5 rounded-[2rem] text-sm font-semibold relative hidden md:block group border border-accent/50 hover:border-accent">
-                <span className="relative z-10">Prenota Demo</span>
-                <span className="hover-bg bg-white/20"></span>
-            </a>
+
+            {/* Mobile menu */}
+            {mobileOpen && (
+                <div className="md:hidden bg-white/95 backdrop-blur-xl border-t border-black/[0.04] px-6 py-6 flex flex-col gap-4">
+                    <a href="#budget" onClick={() => setMobileOpen(false)} className="text-dark font-medium py-2">ECAI-Budget</a>
+                    <a href="#vsme" onClick={() => setMobileOpen(false)} className="text-dark font-medium py-2">Report VSME</a>
+                    <a href="#dashboard" onClick={() => setMobileOpen(false)} className="text-dark font-medium py-2">Dashboard</a>
+                    <a href="#contact" onClick={() => setMobileOpen(false)} className="btn-primary text-center mt-2">Prenota Demo</a>
+                </div>
+            )}
         </nav>
     );
 };
 
+/* ─── HERO ─── */
 const Hero = () => {
     const container = useRef();
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.from(".hero-elem", {
-                y: 40,
+            gsap.from(".hero-el", {
+                y: 30,
                 opacity: 0,
-                stagger: 0.1,
-                duration: 1.2,
+                stagger: 0.12,
+                duration: 1,
                 ease: "power3.out",
-                delay: 0.2
+                delay: 0.3
             });
         }, container);
         return () => ctx.revert();
     }, []);
 
     return (
-        <section ref={container} className="relative h-[100dvh] w-full flex items-end pb-24 px-6 md:px-16 overflow-hidden bg-primary">
-            <div className="absolute inset-0 z-0">
-                <img
-                    src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80"
-                    alt="Bioluminescent AI Background"
-                    className="w-full h-full object-cover opacity-50 scale-[1.02]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A14] via-[#0A0A14]/70 to-transparent mix-blend-multiply"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A14] via-[#0A0A14]/90 to-transparent"></div>
-            </div>
+        <section ref={container} className="hero-gradient min-h-[100dvh] flex items-center relative overflow-hidden pt-20">
+            {/* Subtle grid */}
+            <div className="absolute inset-0 opacity-[0.03]" style={{
+                backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)',
+                backgroundSize: '80px 80px'
+            }} />
 
-            <div className="relative z-10 max-w-5xl text-left w-full">
-                <div className="hero-elem font-mono text-accent text-xs md:text-sm tracking-[0.2em] uppercase mb-6 flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_10px_rgba(123,97,255,0.8)]"></span>
-                    Sustainable AI Solutions for SMEs
+            <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
+                <div className="max-w-4xl">
+                    <div className="hero-el inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-accentLight text-accent text-sm font-medium mb-8">
+                        <Zap className="w-4 h-4" />
+                        AI-Powered Financial & ESG Tools
+                    </div>
+
+                    <h1 className="hero-el text-[clamp(2.5rem,6vw,5.5rem)] leading-[1.05] font-extrabold tracking-tight text-dark mb-6">
+                        Controllo di gestione{' '}
+                        <span className="text-accent">intelligente</span>,{' '}
+                        <br className="hidden lg:block" />
+                        sostenibilità{' '}
+                        <span className="italic font-medium text-muted">automatica.</span>
+                    </h1>
+
+                    <p className="hero-el text-lg md:text-xl text-muted max-w-2xl leading-relaxed mb-10">
+                        ECAI-Budget e Report VSME ESG: due piattaforme AI progettate per le PMI
+                        che vogliono gestire budget e compliance ESG senza complessità.
+                    </p>
+
+                    <div className="hero-el flex flex-wrap gap-4">
+                        <a href="#contact" className="btn-primary text-base">
+                            Prenota una Demo <ArrowRight className="w-5 h-5" />
+                        </a>
+                        <a href="#dashboard" className="btn-secondary text-base">
+                            Esplora le Dashboard
+                        </a>
+                    </div>
                 </div>
-                <h1 className="hero-elem text-6xl md:text-8xl lg:text-[8rem] leading-[0.9] tracking-tighter text-white m-0 flex flex-col">
-                    <span className="font-heading font-bold mb-2 md:mb-0">Intelligenza oltre</span>
-                    <span className="font-drama italic text-accent pr-4">l'Evoluzione.</span>
-                </h1>
-                <p className="hero-elem mt-8 text-lg md:text-xl text-ghost/70 max-w-2xl font-light leading-relaxed">
-                    Strumenti AI di precisione per il controllo di gestione e il bilancio di sostenibilità.
-                    Costruito per le PMI che non seguono le regole, ma le riscrivono.
-                </p>
-                <div className="hero-elem mt-12">
-                    <button className="magnetic-btn bg-white text-darkText px-8 py-4 rounded-[3rem] text-lg font-bold flex items-center gap-3 group">
-                        <span className="relative z-10 flex items-center gap-2">Inizia il Protocollo <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></span>
-                        <span className="hover-bg bg-accent"></span>
-                    </button>
+
+                {/* Floating stats cards */}
+                <div className="hidden lg:block absolute right-12 top-1/2 -translate-y-1/2 w-[340px]">
+                    <div className="float-animation glass-card-strong p-6 shadow-glass-lg mb-4">
+                        <div className="flex items-center justify-between mb-3">
+                            <span className="text-xs font-mono text-muted uppercase tracking-wider">Budget Mensile</span>
+                            <TrendingUp className="w-4 h-4 text-green-500" />
+                        </div>
+                        <div className="text-3xl font-bold text-dark mb-1">€ 142.850</div>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">+12.4%</span>
+                            <span className="text-xs text-muted">vs mese precedente</span>
+                        </div>
+                        {/* Mini chart */}
+                        <div className="mt-4 flex items-end gap-1 h-12">
+                            {[35, 45, 30, 55, 40, 65, 50, 70, 60, 80, 75, 90].map((h, i) => (
+                                <div key={i} className="flex-1 rounded-sm bg-accent/20" style={{ height: `${h}%` }}>
+                                    <div className="w-full rounded-sm bg-accent" style={{ height: `${Math.min(100, h + 10)}%`, opacity: i > 9 ? 1 : 0.4 + (i * 0.05) }} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="float-animation-delayed glass-card-strong p-6 shadow-glass-lg">
+                        <div className="flex items-center justify-between mb-3">
+                            <span className="text-xs font-mono text-muted uppercase tracking-wider">ESG Score</span>
+                            <Leaf className="w-4 h-4 text-green-500" />
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <div className="relative w-16 h-16">
+                                <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                                    <path d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f0f0f0" strokeWidth="3" />
+                                    <path d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#0071e3" strokeWidth="3" strokeDasharray="78, 100" strokeLinecap="round" />
+                                </svg>
+                                <div className="absolute inset-0 flex items-center justify-center text-sm font-bold text-dark">78</div>
+                            </div>
+                            <div>
+                                <div className="text-sm font-semibold text-dark">Rating: B+</div>
+                                <div className="text-xs text-muted">VSME Compliant</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     );
 };
 
-const ShufflerCard = () => {
-    const [order, setOrder] = useState([0, 1, 2]);
-    const labels = [
-        { title: "Analisi Costi", value: "-14%", color: "text-red-400" },
-        { title: "Previsione Ricavi", value: "+22%", color: "text-green-400" },
-        { title: "Margini Reali", value: "31.4%", color: "text-white" }
-    ];
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setOrder(prev => {
-                const newArr = [...prev];
-                const last = newArr.pop();
-                newArr.unshift(last);
-                return newArr;
-            });
-        }, 3000);
-        return () => clearInterval(interval);
-    }, []);
-
-    return (
-        <div className="relative h-64 w-full flex items-center justify-center perspective-[1000px]">
-            {order.map((realIndex, visualPos) => {
-                // visualPos 0 is bottom/back, 2 is top/front
-                const isFront = visualPos === 2;
-                const scale = 0.85 + (visualPos * 0.075);
-                const translateY = (2 - visualPos) * -20;
-                const opacity = 0.4 + (visualPos * 0.3);
-                const zIndex = visualPos;
-
-                return (
-                    <div
-                        key={realIndex}
-                        className="absolute w-4/5 md:w-full max-w-[280px] bg-[#111118] border border-white/10 rounded-[2rem] p-6 shadow-2xl transition-all duration-[800ms] shadow-black/50"
-                        style={{
-                            transform: `scale(${scale}) translateY(${translateY}px)`,
-                            opacity,
-                            zIndex,
-                            transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)"
-                        }}
-                    >
-                        <div className="text-xs font-mono text-ghost/50 uppercase tracking-wider mb-4">ECAI-BUDGET</div>
-                        <div className="font-heading font-semibold text-lg text-white mb-2">{labels[realIndex].title}</div>
-                        <div className={`font-mono text-3xl font-bold ${labels[realIndex].color}`}>{labels[realIndex].value}</div>
-                    </div>
-                );
-            })}
-        </div>
-    );
-};
-
-const TypewriterCard = () => {
-    const fullText = "Analisi parametri ESG in corso...\n> Consumi energetici verificati.\n> Generazione report VSME...\n> Allineamento tassonomia EU: COMPLETATO.";
-    const [text, setText] = useState("");
-
-    useEffect(() => {
-        let index = 0;
-        const interval = setInterval(() => {
-            setText(fullText.substring(0, index));
-            index++;
-            if (index > fullText.length + 20) index = 0; // Pause then restart
-        }, 60);
-        return () => clearInterval(interval);
-    }, [fullText]);
-
-    return (
-        <div className="bg-[#111118] border border-white/10 rounded-[2rem] h-64 p-6 shadow-2xl relative overflow-hidden flex flex-col justify-between">
-            <div className="flex justify-between items-center z-10">
-                <div className="text-xs font-mono text-ghost/50 uppercase tracking-wider">ECAI-VSME</div>
-                <div className="flex items-center gap-2 bg-accent/10 px-3 py-1 rounded-full border border-accent/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-                    <span className="text-[10px] font-mono text-accent uppercase tracking-widest">Live Feed</span>
-                </div>
-            </div>
-            <div className="font-mono text-sm leading-relaxed text-ghost/80 mt-4 whitespace-pre-wrap z-10 flex-grow pt-4">
-                {text}<span className="inline-block w-2 h-4 bg-accent animate-pulse ml-1 align-middle"></span>
-            </div>
-            {/* Subtle grid background */}
-            <div className="absolute inset-0 z-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-        </div>
-    );
-};
-
-const SchedulerCard = () => {
-    const days = ['L', 'M', 'M', 'G', 'V', 'S', 'D'];
-    const cursorRef = useRef(null);
-    const containerRef = useRef(null);
-    const cellRef = useRef(null);
-    const [activeCell, setActiveCell] = useState(-1);
-    const [isClicking, setIsClicking] = useState(false);
-
-    useEffect(() => {
-        let ctx = gsap.context(() => {
-            const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
-
-            // Move to cell
-            tl.to(cursorRef.current, { x: 120, y: 70, duration: 1, ease: "power2.inOut" })
-                // Click
-                .add(() => setIsClicking(true))
-                .to(cursorRef.current, { scale: 0.8, duration: 0.1 })
-                .add(() => setActiveCell(3)) // Activate 'G'
-                .to(cursorRef.current, { scale: 1, duration: 0.1 })
-                .add(() => setIsClicking(false))
-                .to(cursorRef.current, { x: 180, y: 140, duration: 0.8, ease: "power2.inOut", delay: 0.5 })
-                // Click save
-                .add(() => setIsClicking(true))
-                .to(cursorRef.current, { scale: 0.8, duration: 0.1 })
-                .to(".save-btn", { scale: 0.95, duration: 0.1 })
-                .to(".save-btn", { scale: 1, backgroundColor: "#7B61FF", color: "#fff", duration: 0.1 })
-                .to(cursorRef.current, { scale: 1, duration: 0.1 })
-                .add(() => setIsClicking(false))
-                // Reset
-                .to(cursorRef.current, { autoAlpha: 0, duration: 0.3, delay: 0.5 })
-                .add(() => {
-                    setActiveCell(-1);
-                    gsap.set(".save-btn", { backgroundColor: "transparent", color: "rgba(240,239,244,0.5)", clearProps: "all" });
-                })
-                .to(cursorRef.current, { x: 0, y: 0, autoAlpha: 1, duration: 0 });
-        }, containerRef);
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <div ref={containerRef} className="bg-[#111118] border border-white/10 rounded-[2rem] h-64 p-6 shadow-2xl relative">
-            <div className="text-xs font-mono text-ghost/50 uppercase tracking-wider mb-6">Automazioni Su Misura</div>
-
-            <div className="grid grid-cols-7 gap-2 mb-8">
-                {days.map((day, i) => (
-                    <div
-                        key={i}
-                        className={`aspect-square rounded-lg flex items-center justify-center font-mono text-xs transition-colors duration-300 ${activeCell === i ? 'bg-accent text-white shadow-[0_0_15px_rgba(123,97,255,0.3)]' : 'bg-white/5 text-ghost/30 border border-white/5'}`}
-                    >
-                        {day}
-                    </div>
-                ))}
-            </div>
-
-            <div className="flex justify-end mt-auto absolute bottom-6 right-6">
-                <div className="save-btn px-4 py-2 rounded-xl border border-white/10 text-xs font-mono text-ghost/50 transition-colors">
-                    Protocol_Run
-                </div>
-            </div>
-
-            <div
-                ref={cursorRef}
-                className="absolute top-0 left-0 z-50 pointer-events-none drop-shadow-lg"
-                style={{ filter: isClicking ? 'drop-shadow(0 0 2px rgba(123,97,255,1))' : 'drop-shadow(0 4px 6px rgba(0,0,0,0.5))' }}
-            >
-                <MousePointer2 className="w-6 h-6 text-white fill-white/20" />
-            </div>
-        </div>
-    );
-};
-
-const Features = () => {
+/* ─── PRODUCTS OVERVIEW ─── */
+const ProductsOverview = () => {
     const container = useRef();
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.from(".feat-card", {
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top 70%",
-                },
-                y: 60,
+            gsap.from(".product-card", {
+                scrollTrigger: { trigger: container.current, start: "top 75%" },
+                y: 40,
                 opacity: 0,
                 stagger: 0.15,
-                duration: 1,
+                duration: 0.8,
                 ease: "power3.out"
             });
         }, container);
@@ -288,31 +177,76 @@ const Features = () => {
     }, []);
 
     return (
-        <section ref={container} className="py-32 px-6 md:px-16 bg-primary relative z-20">
+        <section ref={container} className="section-padding bg-subtle">
             <div className="max-w-7xl mx-auto">
-                <h2 className="text-4xl md:text-5xl font-heading font-semibold text-white mb-16 tracking-tight">Strumenti Connessi.<br /><span className="text-ghost/40">Esecuzione Perfetta.</span></h2>
+                <div className="text-center mb-16">
+                    <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">I nostri prodotti</p>
+                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-dark">
+                        Due strumenti. Un ecosistema.
+                    </h2>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="feat-card group">
-                        <ShufflerCard />
-                        <div className="mt-8 px-2">
-                            <h3 className="font-heading font-bold text-xl text-white mb-2 group-hover:text-accent transition-colors">Controllo di Gestione AI</h3>
-                            <p className="text-ghost/60 text-sm leading-relaxed">Analisi predittive, gestione del budget dinamica e previsione dei flussi di cassa alimentata dai dati reali.</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* ECAI-Budget Card */}
+                    <div className="product-card glass-card-strong p-8 md:p-10 shadow-glass-lg group hover:shadow-glass-xl transition-shadow duration-500">
+                        <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6">
+                            <BarChart3 className="w-7 h-7 text-accent" />
                         </div>
+                        <h3 className="text-2xl md:text-3xl font-bold text-dark mb-4">ECAI-Budget</h3>
+                        <p className="text-muted leading-relaxed mb-6">
+                            Controllo di gestione AI-driven. Analisi predittive dei costi,
+                            gestione dinamica del budget e previsione dei flussi di cassa
+                            alimentata dai tuoi dati reali.
+                        </p>
+                        <ul className="space-y-3 mb-8">
+                            {[
+                                "Budget predittivo con machine learning",
+                                "Analisi scostamenti in tempo reale",
+                                "Cash flow forecasting automatico",
+                                "KPI dashboard personalizzabile"
+                            ].map((item, i) => (
+                                <li key={i} className="flex items-center gap-3 text-sm text-dark/80">
+                                    <div className="w-5 h-5 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                                        <ChevronRight className="w-3 h-3 text-accent" />
+                                    </div>
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                        <a href="#budget" className="inline-flex items-center gap-2 text-accent font-semibold text-sm group-hover:gap-3 transition-all">
+                            Scopri ECAI-Budget <ArrowUpRight className="w-4 h-4" />
+                        </a>
                     </div>
-                    <div className="feat-card group">
-                        <TypewriterCard />
-                        <div className="mt-8 px-2">
-                            <h3 className="font-heading font-bold text-xl text-white mb-2 group-hover:text-accent transition-colors">Bilancio VSME Diretto</h3>
-                            <p className="text-ghost/60 text-sm leading-relaxed">Generazione del report CSRD e bilancio di sostenibilità in tempo reale. Nessuno sforzo manuale, pura compliance.</p>
+
+                    {/* VSME ESG Card */}
+                    <div className="product-card glass-card-strong p-8 md:p-10 shadow-glass-lg group hover:shadow-glass-xl transition-shadow duration-500">
+                        <div className="w-14 h-14 rounded-2xl bg-green-500/10 flex items-center justify-center mb-6">
+                            <FileText className="w-7 h-7 text-green-600" />
                         </div>
-                    </div>
-                    <div className="feat-card group">
-                        <SchedulerCard />
-                        <div className="mt-8 px-2">
-                            <h3 className="font-heading font-bold text-xl text-white mb-2 group-hover:text-accent transition-colors">Ecosistemi Su Misura</h3>
-                            <p className="text-ghost/60 text-sm leading-relaxed">Integrazioni neurali che collegano ogni tool SaaS del tuo spettro aziendale. Esecuzione autonoma e in cloud.</p>
-                        </div>
+                        <h3 className="text-2xl md:text-3xl font-bold text-dark mb-4">Report VSME ESG</h3>
+                        <p className="text-muted leading-relaxed mb-6">
+                            Generazione automatica del bilancio di sostenibilità VSME.
+                            Compliance europea, raccolta dati guidata e report pronti
+                            per gli stakeholder.
+                        </p>
+                        <ul className="space-y-3 mb-8">
+                            {[
+                                "Compliance CSRD/VSME automatica",
+                                "Raccolta dati ESG guidata da AI",
+                                "Calcolo carbon footprint integrato",
+                                "Report PDF/XBRL export ready"
+                            ].map((item, i) => (
+                                <li key={i} className="flex items-center gap-3 text-sm text-dark/80">
+                                    <div className="w-5 h-5 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                                        <ChevronRight className="w-3 h-3 text-green-600" />
+                                    </div>
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                        <a href="#vsme" className="inline-flex items-center gap-2 text-green-600 font-semibold text-sm group-hover:gap-3 transition-all">
+                            Scopri Report VSME <ArrowUpRight className="w-4 h-4" />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -320,233 +254,581 @@ const Features = () => {
     );
 };
 
-const Philosophy = () => {
+/* ─── BUDGET DASHBOARD SECTION ─── */
+const BudgetDashboard = () => {
     const container = useRef();
+    const [activeTab, setActiveTab] = useState('overview');
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.from(".phil-text-1", {
+            gsap.from(".budget-title", {
+                scrollTrigger: { trigger: container.current, start: "top 70%" },
+                y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+            });
+            gsap.from(".budget-dash", {
                 scrollTrigger: { trigger: container.current, start: "top 60%" },
-                opacity: 0, x: -20, duration: 1, ease: "power2.out"
-            });
-            gsap.from(".phil-text-2", {
-                scrollTrigger: { trigger: container.current, start: "top 40%" },
-                opacity: 0, y: 30, duration: 1.5, ease: "power3.out", delay: 0.2
+                y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2
             });
         }, container);
         return () => ctx.revert();
     }, []);
 
+    const tabs = [
+        { id: 'overview', label: 'Overview' },
+        { id: 'analysis', label: 'Analisi Costi' },
+        { id: 'forecast', label: 'Forecast' },
+    ];
+
     return (
-        <section ref={container} id="philosophy" className="py-40 px-6 md:px-16 bg-[#06060A] relative overflow-hidden flex items-center min-h-[80vh]">
-            <div className="absolute inset-0 z-0">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80" alt="Texture" className="w-full h-full object-cover opacity-10 mix-blend-screen scale-110" />
-            </div>
-            <div className="relative z-10 max-w-5xl mx-auto w-full text-center md:text-left flex flex-col gap-12">
-                <p className="phil-text-1 text-xl md:text-2xl text-ghost/40 font-heading tracking-wide">
-                    La maggior parte dei software aziendali si concentra su: <span className="text-ghost opacity-80 decoration-white/20 underline-offset-4">dati statici e retrospettivi.</span>
-                </p>
-                <h2 className="phil-text-2 text-5xl md:text-7xl lg:text-[6rem] leading-[1.1] text-white">
-                    <span className="font-heading font-bold block mb-4 tracking-tighter">Noi ci concentriamo su</span>
-                    <span className="font-drama italic text-accent tracking-normal pr-4">Orizzonti predittivi.</span>
-                </h2>
+        <section ref={container} id="budget" className="section-padding bg-white relative overflow-hidden">
+            {/* Subtle background blobs */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[100px]" />
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/[0.03] rounded-full blur-[80px]" />
+
+            <div className="max-w-7xl mx-auto relative z-10">
+                <div className="budget-title max-w-2xl mb-12">
+                    <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">ECAI-Budget</p>
+                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-dark mb-4">
+                        Il tuo budget,
+                        <br />in tempo reale.
+                    </h2>
+                    <p className="text-muted text-lg leading-relaxed">
+                        Dashboard interattiva con analisi predittive, scostamenti automatici
+                        e forecast AI. Tutto in un'unica vista.
+                    </p>
+                </div>
+
+                {/* Dashboard Preview */}
+                <div className="budget-dash dashboard-frame p-2 md:p-3">
+                    {/* Title bar */}
+                    <div className="flex items-center justify-between px-5 py-3 border-b border-black/[0.04]">
+                        <div className="flex items-center gap-2">
+                            <div className="flex gap-1.5">
+                                <div className="w-3 h-3 rounded-full bg-red-400/80" />
+                                <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
+                                <div className="w-3 h-3 rounded-full bg-green-400/80" />
+                            </div>
+                            <span className="text-xs font-mono text-muted ml-3">ecai-budget.econova.ai</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            {tabs.map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-all ${activeTab === tab.id ? 'bg-accent text-white' : 'text-muted hover:text-dark hover:bg-black/[0.04]'}`}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Dashboard content */}
+                    <div className="p-5 md:p-8">
+                        {activeTab === 'overview' && <BudgetOverviewTab />}
+                        {activeTab === 'analysis' && <BudgetAnalysisTab />}
+                        {activeTab === 'forecast' && <BudgetForecastTab />}
+                    </div>
+                </div>
             </div>
         </section>
     );
 };
 
-const Protocollo = () => {
+const BudgetOverviewTab = () => (
+    <div className="space-y-6">
+        {/* KPI row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+                { label: "Ricavi Totali", value: "€ 1.24M", change: "+8.2%", positive: true },
+                { label: "Costi Operativi", value: "€ 842K", change: "-3.1%", positive: true },
+                { label: "Margine Netto", value: "32.1%", change: "+2.4pp", positive: true },
+                { label: "Cash Flow", value: "€ 398K", change: "+15.7%", positive: true },
+            ].map((kpi, i) => (
+                <div key={i} className="bg-subtle rounded-2xl p-5">
+                    <div className="text-xs text-muted font-medium mb-2">{kpi.label}</div>
+                    <div className="text-xl md:text-2xl font-bold text-dark">{kpi.value}</div>
+                    <div className={`text-xs font-semibold mt-1 ${kpi.positive ? 'text-green-600' : 'text-red-500'}`}>
+                        {kpi.change}
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        {/* Chart area */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-2 bg-subtle rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-6">
+                    <span className="text-sm font-semibold text-dark">Andamento Budget vs Actual</span>
+                    <span className="text-xs text-muted font-mono">Q1 2026</span>
+                </div>
+                {/* Simplified chart bars */}
+                <div className="flex items-end gap-3 h-40">
+                    {[
+                        { budget: 65, actual: 58, label: "Gen" },
+                        { budget: 70, actual: 72, label: "Feb" },
+                        { budget: 60, actual: 55, label: "Mar" },
+                        { budget: 75, actual: 68, label: "Apr" },
+                        { budget: 80, actual: 78, label: "Mag" },
+                        { budget: 72, actual: 70, label: "Giu" },
+                        { budget: 85, actual: 82, label: "Lug" },
+                        { budget: 78, actual: 80, label: "Ago" },
+                        { budget: 90, actual: 88, label: "Set" },
+                        { budget: 82, actual: 85, label: "Ott" },
+                        { budget: 88, actual: 90, label: "Nov" },
+                        { budget: 95, actual: 92, label: "Dic" },
+                    ].map((d, i) => (
+                        <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                            <div className="w-full flex gap-0.5 items-end" style={{ height: '120px' }}>
+                                <div className="flex-1 bg-accent/20 rounded-t-sm" style={{ height: `${d.budget}%` }} />
+                                <div className="flex-1 bg-accent rounded-t-sm" style={{ height: `${d.actual}%` }} />
+                            </div>
+                            <span className="text-[10px] text-muted">{d.label}</span>
+                        </div>
+                    ))}
+                </div>
+                <div className="flex items-center gap-6 mt-4">
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-sm bg-accent/20" />
+                        <span className="text-xs text-muted">Budget</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-sm bg-accent" />
+                        <span className="text-xs text-muted">Actual</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Side panel */}
+            <div className="bg-subtle rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <span className="text-sm font-semibold text-dark">Distribuzione Costi</span>
+                    <div className="mt-6 space-y-4">
+                        {[
+                            { label: "Personale", pct: 42, color: "bg-accent" },
+                            { label: "Materiali", pct: 28, color: "bg-purple-500" },
+                            { label: "Servizi", pct: 18, color: "bg-green-500" },
+                            { label: "Altro", pct: 12, color: "bg-gray-400" },
+                        ].map((item, i) => (
+                            <div key={i}>
+                                <div className="flex justify-between text-xs mb-1">
+                                    <span className="text-dark/70">{item.label}</span>
+                                    <span className="font-mono text-muted">{item.pct}%</span>
+                                </div>
+                                <div className="h-1.5 bg-black/[0.04] rounded-full overflow-hidden">
+                                    <div className={`h-full ${item.color} rounded-full`} style={{ width: `${item.pct}%` }} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="mt-6 pt-4 border-t border-black/[0.04]">
+                    <div className="text-xs text-muted">Budget residuo Q1</div>
+                    <div className="text-2xl font-bold text-dark">€ 156.200</div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+const BudgetAnalysisTab = () => (
+    <div className="space-y-6">
+        <div className="bg-subtle rounded-2xl p-6">
+            <span className="text-sm font-semibold text-dark">Analisi Scostamenti per Centro di Costo</span>
+            <div className="mt-6 space-y-4">
+                {[
+                    { label: "Produzione", budget: "€ 320K", actual: "€ 298K", delta: "-6.9%", positive: true },
+                    { label: "Marketing", budget: "€ 85K", actual: "€ 92K", delta: "+8.2%", positive: false },
+                    { label: "R&D", budget: "€ 150K", actual: "€ 145K", delta: "-3.3%", positive: true },
+                    { label: "Amministrazione", budget: "€ 120K", actual: "€ 118K", delta: "-1.7%", positive: true },
+                    { label: "Logistica", budget: "€ 95K", actual: "€ 102K", delta: "+7.4%", positive: false },
+                ].map((row, i) => (
+                    <div key={i} className="flex items-center justify-between py-3 border-b border-black/[0.03] last:border-0">
+                        <span className="text-sm text-dark font-medium w-36">{row.label}</span>
+                        <span className="text-sm text-muted font-mono">{row.budget}</span>
+                        <span className="text-sm text-dark font-mono font-medium">{row.actual}</span>
+                        <span className={`text-sm font-mono font-bold px-3 py-1 rounded-lg ${row.positive ? 'text-green-700 bg-green-50' : 'text-red-600 bg-red-50'}`}>
+                            {row.delta}
+                        </span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-subtle rounded-2xl p-6">
+                <div className="text-sm font-semibold text-dark mb-4">Alert AI</div>
+                <div className="space-y-3">
+                    {[
+                        { text: "Marketing ha superato il budget del 8.2%", type: "warning" },
+                        { text: "Rischio overrun su Logistica: tendenza Q2", type: "alert" },
+                        { text: "R&D sotto budget: possibilità riallocazione", type: "info" },
+                    ].map((alert, i) => (
+                        <div key={i} className={`flex items-start gap-3 p-3 rounded-xl ${
+                            alert.type === 'warning' ? 'bg-yellow-50' : alert.type === 'alert' ? 'bg-red-50' : 'bg-blue-50'
+                        }`}>
+                            <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
+                                alert.type === 'warning' ? 'bg-yellow-500' : alert.type === 'alert' ? 'bg-red-500' : 'bg-accent'
+                            }`} />
+                            <span className="text-xs text-dark/80">{alert.text}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="bg-subtle rounded-2xl p-6">
+                <div className="text-sm font-semibold text-dark mb-2">Efficienza Budget</div>
+                <div className="text-5xl font-bold text-dark mt-4">94.2<span className="text-2xl text-muted">%</span></div>
+                <div className="text-xs text-green-600 font-medium mt-2">+3.1% rispetto al trimestre precedente</div>
+                <div className="mt-6 h-2 bg-black/[0.04] rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-accent to-green-500 rounded-full" style={{ width: '94.2%' }} />
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+const BudgetForecastTab = () => (
+    <div className="space-y-6">
+        <div className="bg-subtle rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-6">
+                <span className="text-sm font-semibold text-dark">Previsione Cash Flow — Prossimi 6 Mesi</span>
+                <div className="flex items-center gap-2 text-xs">
+                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent" /> Previsto</span>
+                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent/30" /> Range</span>
+                </div>
+            </div>
+            {/* Forecast wave */}
+            <svg viewBox="0 0 600 150" className="w-full" preserveAspectRatio="none">
+                {/* Confidence interval */}
+                <path d="M0,90 C100,70 150,60 200,55 C250,50 300,45 350,50 C400,55 450,40 500,35 L500,80 C450,85 400,90 350,95 C300,100 250,95 200,90 C150,85 100,95 0,110 Z" fill="rgba(0,113,227,0.08)" />
+                {/* Main line */}
+                <path d="M0,100 C100,80 150,70 200,72 C250,74 300,68 350,70 C400,72 450,60 500,55" fill="none" stroke="#0071e3" strokeWidth="2.5" strokeLinecap="round" />
+                {/* Historical line */}
+                <path d="M0,100 C30,95 60,92 100,80" fill="none" stroke="#0071e3" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.4" />
+                {/* Data points */}
+                {[[200, 72], [300, 68], [400, 72], [500, 55]].map(([x, y], i) => (
+                    <circle key={i} cx={x} cy={y} r="4" fill="white" stroke="#0071e3" strokeWidth="2" />
+                ))}
+            </svg>
+            <div className="flex justify-between mt-2 text-[10px] text-muted font-mono">
+                {["Apr", "Mag", "Giu", "Lug", "Ago", "Set"].map(m => <span key={m}>{m}</span>)}
+            </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+                { label: "Ricavi Previsti Q2", value: "€ 1.38M", icon: TrendingUp, change: "+11.3%" },
+                { label: "Rischio Liquidità", value: "Basso", icon: Shield, change: "Stabile" },
+                { label: "ROI Previsto", value: "18.4%", icon: Target, change: "+2.1pp" },
+            ].map((card, i) => (
+                <div key={i} className="bg-subtle rounded-2xl p-5">
+                    <card.icon className="w-5 h-5 text-accent mb-3" />
+                    <div className="text-xs text-muted mb-1">{card.label}</div>
+                    <div className="text-xl font-bold text-dark">{card.value}</div>
+                    <div className="text-xs text-green-600 font-medium mt-1">{card.change}</div>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
+/* ─── VSME ESG DASHBOARD SECTION ─── */
+const VsmeDashboard = () => {
     const container = useRef();
-    const c1 = useRef();
-    const c2 = useRef();
-    const c3 = useRef();
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            // Pinning the whole section for the stacking effect
-            ScrollTrigger.create({
-                trigger: container.current,
-                start: "top top",
-                end: "+=200%",
-                pin: true,
+            gsap.from(".vsme-title", {
+                scrollTrigger: { trigger: container.current, start: "top 70%" },
+                y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
             });
-
-            // Card 1 to Card 2 transition
-            gsap.to(c1.current, {
-                scale: 0.9, opacity: 0.4, filter: "blur(10px)",
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top top",
-                    end: "+=100%",
-                    scrub: true,
-                }
+            gsap.from(".vsme-dash", {
+                scrollTrigger: { trigger: container.current, start: "top 60%" },
+                y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2
             });
-            gsap.from(c2.current, {
-                y: "100%",
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top top",
-                    end: "+=100%",
-                    scrub: true,
-                }
-            });
-
-            // Card 2 to Card 3 transition
-            gsap.to(c2.current, {
-                scale: 0.9, opacity: 0.4, filter: "blur(10px)",
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top -100%",
-                    end: "+=100%",
-                    scrub: true,
-                }
-            });
-            gsap.from(c3.current, {
-                y: "100%",
-                scrollTrigger: {
-                    trigger: container.current,
-                    start: "top -100%",
-                    end: "+=100%",
-                    scrub: true,
-                }
-            });
-
         }, container);
         return () => ctx.revert();
     }, []);
 
     return (
-        <section ref={container} id="protocol" className="h-[100vh] w-full bg-primary relative overflow-hidden">
+        <section ref={container} id="vsme" className="section-padding bg-subtle relative overflow-hidden">
+            <div className="absolute top-20 left-0 w-[600px] h-[600px] bg-green-500/[0.03] rounded-full blur-[120px]" />
 
-            {/* Card 1 */}
-            <div ref={c1} className="absolute inset-0 flex flex-col md:flex-row items-center justify-center px-6 md:px-24 bg-primary z-10 p-12 top-0 origin-top">
-                <div className="flex-1 w-full max-w-xl pr-0 md:pr-16 mb-12 md:mb-0">
-                    <div className="font-mono text-accent text-sm mb-4 tracking-[0.2em] border border-accent/20 bg-accent/5 px-3 py-1 inline-block rounded-full">PHASE_01</div>
-                    <h2 className="text-5xl md:text-6xl font-heading font-bold text-white mb-6">Analisi Radicale</h2>
-                    <p className="text-xl text-ghost/60 font-light leading-relaxed">Connettiamo i tuoi database aziendali in tempo reale, abbattendo i silos di informazioni ed estraendo i veri parametri vitali dell'azienda.</p>
+            <div className="max-w-7xl mx-auto relative z-10">
+                <div className="vsme-title max-w-2xl mb-12">
+                    <p className="text-green-600 font-semibold text-sm uppercase tracking-wider mb-3">Report VSME ESG</p>
+                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-dark mb-4">
+                        Sostenibilità,
+                        <br />senza burocrazia.
+                    </h2>
+                    <p className="text-muted text-lg leading-relaxed">
+                        Compila il tuo bilancio VSME in modo guidato. L'AI raccoglie, valida e
+                        genera il report finale conforme alla normativa EU.
+                    </p>
                 </div>
-                <div className="flex-1 w-full h-[400px] bg-[#111118] rounded-[3rem] border border-white/5 relative overflow-hidden flex items-center justify-center shadow-2xl">
-                    <svg viewBox="0 0 200 200" className="w-[80%] h-[80%] opacity-40 animate-[spin_40s_linear_infinite]" fill="none">
-                        <circle cx="100" cy="100" r="80" stroke="#7B61FF" strokeWidth="1" strokeDasharray="4 8" />
-                        <circle cx="100" cy="100" r="60" stroke="#F0EFF4" strokeWidth="2" strokeDasharray="10 20" />
-                        <path d="M 100 0 L 100 200 M 0 100 L 200 100" stroke="#7B61FF" strokeWidth="0.5" strokeOpacity="0.5" />
-                        <rect x="70" y="70" width="60" height="60" stroke="#F0EFF4" strokeWidth="1" transform="rotate(45 100 100)" />
-                    </svg>
-                </div>
-            </div>
 
-            {/* Card 2 */}
-            <div ref={c2} className="absolute inset-0 flex flex-col md:flex-row items-center justify-center px-6 md:px-24 bg-[#08080C] z-20 p-12 top-0 origin-top shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
-                <div className="flex-1 w-full max-w-xl pr-0 md:pr-16 mb-12 md:mb-0">
-                    <div className="font-mono text-accent text-sm mb-4 tracking-[0.2em] border border-accent/20 bg-accent/5 px-3 py-1 inline-block rounded-full">PHASE_02</div>
-                    <h2 className="text-5xl md:text-6xl font-heading font-bold text-white mb-6">Sintesi Algoritmica</h2>
-                    <p className="text-xl text-ghost/60 font-light leading-relaxed">ECAI genera scenari di budget, calcola i KPI predittivi e automatizza le direttive ESG per il bilancio di sostenibilità. A norma di legge EU.</p>
-                </div>
-                <div className="flex-1 w-full h-[400px] bg-primary rounded-[3rem] border border-white/5 relative overflow-hidden flex items-center justify-center shadow-2xl group">
-                    <div className="absolute inset-0 grid grid-cols-10 grid-rows-10 gap-0.5 opacity-20 px-8 py-8 w-full h-full">
-                        {Array.from({ length: 100 }).map((_, i) => <div key={i} className="bg-ghost/30 rounded-sm"></div>)}
+                {/* VSME Dashboard Preview */}
+                <div className="vsme-dash dashboard-frame p-2 md:p-3">
+                    {/* Title bar */}
+                    <div className="flex items-center justify-between px-5 py-3 border-b border-black/[0.04]">
+                        <div className="flex items-center gap-2">
+                            <div className="flex gap-1.5">
+                                <div className="w-3 h-3 rounded-full bg-red-400/80" />
+                                <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
+                                <div className="w-3 h-3 rounded-full bg-green-400/80" />
+                            </div>
+                            <span className="text-xs font-mono text-muted ml-3">ecai-vsme.econova.ai</span>
+                        </div>
                     </div>
-                    <div className="absolute top-0 left-0 w-full h-[2px] bg-accent shadow-[0_0_15px_rgba(123,97,255,1)] animate-[pulse_2s_infinite] opacity-80" style={{ animation: 'scan 3s linear infinite' }}>
-                        <style>{`@keyframes scan { 0% { top: 10%; } 100% { top: 90%; } }`}</style>
+
+                    <div className="p-5 md:p-8 space-y-6">
+                        {/* Progress header */}
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h3 className="text-lg font-bold text-dark">Report VSME 2025</h3>
+                                <p className="text-sm text-muted">Ultimo aggiornamento: 15 Mar 2026</p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="text-right">
+                                    <div className="text-2xl font-bold text-dark">78%</div>
+                                    <div className="text-xs text-muted">Completamento</div>
+                                </div>
+                                <div className="relative w-14 h-14">
+                                    <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                                        <path d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#f0f0f0" strokeWidth="3" />
+                                        <path d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#22c55e" strokeWidth="3" strokeDasharray="78, 100" strokeLinecap="round" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ESG Pillars */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {[
+                                { pillar: "Environmental", score: 82, items: ["Emissioni GHG Scope 1-2", "Consumi energetici", "Gestione rifiuti", "Risorse idriche"], color: "green", completedItems: 3 },
+                                { pillar: "Social", score: 71, items: ["Diversità e inclusione", "Salute e sicurezza", "Formazione dipendenti", "Diritti umani"], color: "blue", completedItems: 2 },
+                                { pillar: "Governance", score: 88, items: ["Etica aziendale", "Anti-corruzione", "Gestione rischi", "Data privacy"], color: "purple", completedItems: 4 },
+                            ].map((p, i) => (
+                                <div key={i} className="bg-subtle rounded-2xl p-5">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <span className="text-sm font-bold text-dark">{p.pillar}</span>
+                                        <span className={`text-xs font-bold px-2.5 py-1 rounded-lg ${
+                                            p.color === 'green' ? 'bg-green-50 text-green-700' :
+                                            p.color === 'blue' ? 'bg-blue-50 text-blue-700' :
+                                            'bg-purple-50 text-purple-700'
+                                        }`}>{p.score}/100</span>
+                                    </div>
+                                    <div className="space-y-2.5">
+                                        {p.items.map((item, j) => (
+                                            <div key={j} className="flex items-center gap-2.5">
+                                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                                                    j < p.completedItems
+                                                        ? p.color === 'green' ? 'bg-green-500 border-green-500' :
+                                                          p.color === 'blue' ? 'bg-blue-500 border-blue-500' :
+                                                          'bg-purple-500 border-purple-500'
+                                                        : 'border-gray-300 bg-white'
+                                                }`}>
+                                                    {j < p.completedItems && (
+                                                        <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                                <span className={`text-xs ${j < p.completedItems ? 'text-dark' : 'text-muted'}`}>{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Carbon footprint mini */}
+                        <div className="bg-subtle rounded-2xl p-6">
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                <div>
+                                    <div className="text-sm font-semibold text-dark mb-1">Carbon Footprint Stimato</div>
+                                    <div className="text-3xl font-bold text-dark">124.5 <span className="text-lg text-muted font-normal">tCO₂e</span></div>
+                                    <div className="text-xs text-green-600 font-medium mt-1">-18.3% vs anno precedente</div>
+                                </div>
+                                {/* Mini breakdown */}
+                                <div className="flex items-center gap-6">
+                                    {[
+                                        { label: "Scope 1", value: "32.1", pct: 26 },
+                                        { label: "Scope 2", value: "58.4", pct: 47 },
+                                        { label: "Scope 3", value: "34.0", pct: 27 },
+                                    ].map((s, i) => (
+                                        <div key={i} className="text-center">
+                                            <div className="text-lg font-bold text-dark">{s.value}</div>
+                                            <div className="text-[10px] text-muted">{s.label}</div>
+                                            <div className="w-12 h-1 bg-black/[0.04] rounded-full mt-1.5 mx-auto overflow-hidden">
+                                                <div className="h-full bg-green-500 rounded-full" style={{ width: `${s.pct * 2}%` }} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            {/* Card 3 */}
-            <div ref={c3} className="absolute inset-0 flex flex-col md:flex-row items-center justify-center px-6 md:px-24 bg-[#040406] z-30 p-12 top-0 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
-                <div className="flex-1 w-full max-w-xl pr-0 md:pr-16 mb-12 md:mb-0">
-                    <div className="font-mono text-accent text-sm mb-4 tracking-[0.2em] border border-accent/20 bg-accent/5 px-3 py-1 inline-block rounded-full">PHASE_03</div>
-                    <h2 className="text-5xl md:text-6xl font-heading font-bold text-white mb-6">Evoluzione Perpetua</h2>
-                    <p className="text-xl text-ghost/60 font-light leading-relaxed">Le workstation e le soluzioni edge apprendono dai trend macroeconomici del tuo settore, affinando il controllo di gestione giorno dopo giorno.</p>
-                </div>
-                <div className="flex-1 w-full h-[400px] bg-primary rounded-[3rem] border border-white/5 relative overflow-hidden flex items-center justify-center shadow-2xl">
-                    <svg viewBox="0 0 400 200" className="w-[90%] h-full opacity-60">
-                        <path
-                            d="M 0 100 Q 25 50 50 100 T 100 100 T 150 100 T 200 100 T 250 100 T 300 100 T 350 100 T 400 100"
-                            stroke="#7B61FF"
-                            strokeWidth="3"
-                            fill="none"
-                            style={{ strokeDasharray: 800, strokeDashoffset: 800, animation: 'dash 4s linear infinite alternate' }}
-                        />
-                        <style>{`@keyframes dash { to { stroke-dashoffset: 0; } }`}</style>
-                    </svg>
-                </div>
-            </div>
-        </section >
-    );
-};
-
-const CTASection = () => {
-    return (
-        <section className="py-40 px-6 bg-primary relative overflow-hidden flex items-center justify-center border-t border-white/5">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-accent/20 blur-[150px] rounded-full pointer-events-none mix-blend-screen"></div>
-
-            <div className="relative z-10 max-w-4xl w-full flex flex-col items-center text-center">
-                <Lock className="w-12 h-12 text-accent mb-8 opacity-80" />
-                <h2 className="text-5xl md:text-7xl font-heading font-bold text-white mb-8 tracking-tighter">Pronto a trasformare il tuo ecosistema?</h2>
-                <p className="text-xl text-ghost/50 mb-12 max-w-2xl font-light">L'intelligenza artificiale non è il futuro, è l'infrastruttura del presente. Prenota una demo interattiva per ECAI-BUDGET o ECAI-VSME.</p>
-
-                <a href="https://www.econova.ai/contacts" className="magnetic-btn bg-white text-darkText px-12 py-5 rounded-[4rem] text-xl font-bold flex items-center gap-4 group hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-shadow">
-                    <span className="relative z-10 flex items-center gap-2">Contattaci per una Demo <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" /></span>
-                    <span className="hover-bg bg-accent"></span>
-                </a>
             </div>
         </section>
     );
 };
 
+/* ─── WHY SECTION ─── */
+const WhySection = () => {
+    const container = useRef();
+
+    useLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            gsap.from(".why-item", {
+                scrollTrigger: { trigger: container.current, start: "top 70%" },
+                y: 30, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power3.out"
+            });
+        }, container);
+        return () => ctx.revert();
+    }, []);
+
+    const reasons = [
+        { icon: Zap, title: "Setup in 48h", desc: "Nessuna infrastruttura complessa. Colleghi i tuoi dati e sei operativo in due giorni." },
+        { icon: Shield, title: "GDPR & EU Compliant", desc: "Dati in cloud europeo. Privacy by design. Nessuna condivisione con terze parti." },
+        { icon: PieChart, title: "AI Predittiva", desc: "Modelli di machine learning allenati su pattern finanziari e normative ESG italiane ed europee." },
+        { icon: Target, title: "Per le PMI", desc: "Non un enterprise tool adattato. Costruito nativamente per la realtà delle piccole e medie imprese." },
+    ];
+
+    return (
+        <section ref={container} id="dashboard" className="section-padding bg-white">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-16">
+                    <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">Perché ECONOVA AI</p>
+                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-dark">
+                        Progettato per chi fa impresa.
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {reasons.map((r, i) => (
+                        <div key={i} className="why-item glass-card-strong p-8 shadow-card hover:shadow-elevated transition-shadow duration-500 group">
+                            <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors">
+                                <r.icon className="w-6 h-6 text-accent" />
+                            </div>
+                            <h3 className="text-lg font-bold text-dark mb-2">{r.title}</h3>
+                            <p className="text-sm text-muted leading-relaxed">{r.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+/* ─── CTA SECTION ─── */
+const CTASection = () => {
+    const container = useRef();
+
+    useLayoutEffect(() => {
+        let ctx = gsap.context(() => {
+            gsap.from(".cta-content", {
+                scrollTrigger: { trigger: container.current, start: "top 70%" },
+                y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+            });
+        }, container);
+        return () => ctx.revert();
+    }, []);
+
+    return (
+        <section ref={container} id="contact" className="section-padding bg-subtle">
+            <div className="max-w-4xl mx-auto">
+                <div className="cta-content shimmer-border rounded-[32px] p-[1px]">
+                    <div className="bg-white rounded-[31px] p-10 md:p-16 text-center">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-accent/10 text-accent text-sm font-medium mb-8">
+                            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                            Disponibile ora
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-dark mb-4">
+                            Pronto a vedere i tuoi dati
+                            <br />in modo nuovo?
+                        </h2>
+                        <p className="text-muted text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+                            Prenota una demo gratuita di 30 minuti. Ti mostriamo come ECAI-Budget
+                            e Report VSME possono trasformare la gestione della tua PMI.
+                        </p>
+                        <div className="flex flex-wrap justify-center gap-4">
+                            <a href="mailto:info@econova.ai" className="btn-primary text-base">
+                                Prenota una Demo <ArrowRight className="w-5 h-5" />
+                            </a>
+                            <a href="mailto:info@econova.ai" className="btn-secondary text-base">
+                                Contattaci
+                            </a>
+                        </div>
+                        <p className="text-xs text-muted mt-6">Nessun impegno. Nessuna carta di credito.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+/* ─── FOOTER ─── */
 const Footer = () => {
     return (
-        <footer className="bg-[#040406] pt-24 pb-12 px-8 md:px-16 rounded-t-[4rem] border-t border-white/5 relative z-40 mt-[-2rem]">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-16 md:gap-8 border-b border-white/10 pb-16">
+        <footer className="bg-dark text-white/80 py-16 px-6 md:px-12">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col md:flex-row justify-between gap-12 pb-12 border-b border-white/10">
+                    <div className="max-w-xs">
+                        <div className="flex items-center gap-2 mb-4">
+                            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+                                <span className="text-white text-sm font-bold">E</span>
+                            </div>
+                            <span className="text-lg font-bold tracking-tight text-white">
+                                ECONOVA<span className="text-accent">AI</span>
+                            </span>
+                        </div>
+                        <p className="text-white/50 text-sm leading-relaxed">
+                            AI per il controllo di gestione e la sostenibilità delle PMI italiane.
+                        </p>
+                    </div>
 
-                <div className="flex flex-col gap-6 max-w-xs">
-                    <a href="https://www.econova.ai/" className="cursor-pointer flex items-center">
-                        <img src="https://static1.squarespace.com/static/65db0e46e48ddc280efd4555/t/67ba645790c775229d169054/1740268632220/LOGO+ultimo.png" alt="ECONOVA-AI Logo" className="h-10 object-contain" />
-                    </a>
-                    <p className="text-ghost/40 text-sm leading-relaxed">Sustainable AI solutions for SMEs. Intelligenza artificiale applicata al mondo reale, con standard di livello enterprise.</p>
-                    <div className="flex items-center gap-2 text-xs font-mono bg-white/5 border border-white/10 px-4 py-2 rounded-full w-fit mt-4">
-                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>
-                        System Operational
+                    <div className="flex gap-16">
+                        <div>
+                            <div className="text-xs uppercase tracking-widest text-white/30 font-semibold mb-4">Prodotti</div>
+                            <div className="flex flex-col gap-3">
+                                <a href="#budget" className="text-sm text-white/60 hover:text-white transition-colors">ECAI-Budget</a>
+                                <a href="#vsme" className="text-sm text-white/60 hover:text-white transition-colors">Report VSME ESG</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="text-xs uppercase tracking-widest text-white/30 font-semibold mb-4">Azienda</div>
+                            <div className="flex flex-col gap-3">
+                                <a href="mailto:info@econova.ai" className="text-sm text-white/60 hover:text-white transition-colors">Contatti</a>
+                                <a href="#" className="text-sm text-white/60 hover:text-white transition-colors">Privacy Policy</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="flex gap-16 md:gap-24 flex-wrap">
-                    <div className="flex flex-col gap-4">
-                        <div className="text-xs uppercase tracking-widest font-mono text-ghost/30 mb-2">Piattaforma e Servizi</div>
-                        <a href="https://www.econova.ai/controllo-di-gestione" className="text-sm text-ghost/70 hover:text-white transition-colors">ECAI-BUDGET</a>
-                        <a href="https://www.econova.ai/vsme-csrd" className="text-sm text-ghost/70 hover:text-white transition-colors">ECAI-VSME (Bilancio ESG)</a>
-                        <a href="https://www.econova.ai/edge-solutions" className="text-sm text-ghost/70 hover:text-white transition-colors">Edge Solutions</a>
-                        <a href="https://www.econova.ai/ai-workstations" className="text-sm text-ghost/70 hover:text-white transition-colors">AI Workstations</a>
-                        <a href="https://www.econova.ai/formazione-ai" className="text-sm text-ghost/70 hover:text-white transition-colors">Formazione AI</a>
-                    </div>
-                    <div className="flex flex-col gap-4">
-                        <div className="text-xs uppercase tracking-widest font-mono text-ghost/30 mb-2">Azienda</div>
-                        <a href="https://www.econova.ai/aboutus" className="text-sm text-ghost/70 hover:text-white transition-colors">About Us</a>
-                        <a href="https://www.econova.ai/blog-1-1" className="text-sm text-ghost/70 hover:text-white transition-colors">Blog & News</a>
-                        <a href="https://www.econova.ai/events" className="text-sm text-ghost/70 hover:text-white transition-colors">Eventi</a>
-                        <a href="https://www.econova.ai/privacy" className="text-sm text-ghost/70 hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="https://www.econova.ai/contacts" className="text-sm text-ghost/70 hover:text-white transition-colors">Contattaci</a>
+                <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/30">
+                    <div>© 2026 ECONOVA AI S.r.l. — P.IVA IT 02814630410</div>
+                    <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_6px_rgba(34,197,94,0.6)]" />
+                        <span className="font-mono">Tutti i sistemi operativi</span>
                     </div>
                 </div>
-            </div>
-
-            <div className="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-ghost/30">
-                <div>© 2026 ECONOVA-AI. All rights reserved. PI: IT 02814630410</div>
-                <div>Engineered via Protocol D</div>
             </div>
         </footer>
     );
 };
 
+/* ─── APP ─── */
 export default function App() {
     return (
-        <div className="bg-primary text-ghost selection:bg-accent selection:text-white relative min-h-screen">
+        <div className="bg-white text-dark selection:bg-accent/20 selection:text-dark relative min-h-screen">
             <Navbar />
             <Hero />
-            <Features />
-            <Philosophy />
-            <Protocollo />
+            <ProductsOverview />
+            <BudgetDashboard />
+            <VsmeDashboard />
+            <WhySection />
             <CTASection />
             <Footer />
         </div>
