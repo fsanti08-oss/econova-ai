@@ -5,30 +5,15 @@ import { ArrowRight, ArrowUpRight, BarChart3, FileText, Shield, Zap, TrendingUp,
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── ECONOVA LOGO SVG ─── */
+/* ─── ECONOVA LOGO ─── */
 const EconovaLogo = ({ className = "h-9", white = false }) => (
-    <svg className={className} viewBox="0 0 280 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Atom/orbital icon */}
-        <g transform="translate(5, 5) scale(0.55)">
-            {/* Orbits */}
-            <ellipse cx="36" cy="36" rx="32" ry="14" transform="rotate(-30 36 36)" stroke={white ? "#fff" : "#2B7A0E"} strokeWidth="3" fill="none" opacity="0.7"/>
-            <ellipse cx="36" cy="36" rx="32" ry="14" transform="rotate(30 36 36)" stroke={white ? "#fff" : "#7AC943"} strokeWidth="3" fill="none" opacity="0.8"/>
-            <ellipse cx="36" cy="36" rx="32" ry="14" transform="rotate(90 36 36)" stroke={white ? "#fff" : "#2B7A0E"} strokeWidth="3" fill="none" opacity="0.6"/>
-            {/* Center nucleus */}
-            <circle cx="36" cy="36" r="6" fill={white ? "#fff" : "#7AC943"} />
-            {/* Electron dots */}
-            <circle cx="10" cy="22" r="3" fill={white ? "#fff" : "#2B7A0E"} />
-            <circle cx="62" cy="50" r="3" fill={white ? "#fff" : "#7AC943"} />
-            <circle cx="36" cy="3" r="3" fill={white ? "#fff" : "#2B7A0E"} opacity="0.7"/>
-        </g>
-        {/* Text */}
-        <text x="52" y="33" fontFamily="Montserrat, sans-serif" fontWeight="800" fontSize="26" fill={white ? "#fff" : "#2B7A0E"} letterSpacing="0.5">
-            ECONOVA
-        </text>
-        <text x="222" y="33" fontFamily="Montserrat, sans-serif" fontWeight="800" fontSize="26" fill={white ? "#fff" : "#7AC943"} letterSpacing="0.5">
-            -AI
-        </text>
-    </svg>
+    <a href="#" className={className}>
+        <img
+            src="/econova-logo.svg"
+            alt="Econova"
+            className={`h-full w-auto object-contain ${white ? 'invert brightness-0 brightness-100' : ''}`}
+        />
+    </a>
 );
 
 /* ─── NAVBAR ─── */
@@ -45,9 +30,7 @@ const Navbar = () => {
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 backdrop-blur-xl border-b border-black/[0.04] shadow-soft' : 'bg-transparent'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
-                <a href="#" className="flex items-center">
-                    <EconovaLogo className="h-8 sm:h-9" />
-                </a>
+                <EconovaLogo className="h-8 sm:h-9" />
 
                 <div className="hidden md:flex items-center gap-8 lg:gap-10 text-sm font-medium text-muted">
                     <a href="#budget" className="hover:text-dark transition-colors">ECAI-Budget</a>
@@ -104,12 +87,7 @@ const Hero = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full relative z-10">
                 <div className="max-w-4xl">
-                    <div className="hero-el inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-accentLight text-accent text-sm font-medium mb-6 sm:mb-8">
-                        <Zap className="w-4 h-4" />
-                        AI-Powered Financial & ESG Tools
-                    </div>
-
-                    <h1 className="hero-el text-[clamp(2.2rem,6vw,5.5rem)] leading-[1.05] font-extrabold tracking-tight text-dark mb-4 sm:mb-6">
+                    <h1 className="hero-el text-center lg:text-left text-[clamp(2.2rem,6vw,5.5rem)] leading-[1.05] font-extrabold tracking-tight text-dark mb-4 sm:mb-6">
                         Controllo di gestione{' '}
                         <span className="text-accent">intelligente</span>,{' '}
                         <br className="hidden lg:block" />
@@ -117,12 +95,12 @@ const Hero = () => {
                         <span className="italic font-medium text-muted">automatica.</span>
                     </h1>
 
-                    <p className="hero-el text-base sm:text-lg md:text-xl text-muted max-w-2xl leading-relaxed mb-8 sm:mb-10">
+                    <p className="hero-el text-center lg:text-left text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto lg:mx-0 leading-relaxed mb-8 sm:mb-10">
                         ECAI-Budget e Report VSME ESG: due piattaforme AI progettate per le PMI
                         che vogliono gestire budget e compliance ESG senza complessità.
                     </p>
 
-                    <div className="hero-el flex flex-col sm:flex-row gap-3 sm:gap-4">
+                    <div className="hero-el flex flex-col sm:flex-row gap-3 sm:gap-4 items-center lg:items-start">
                         <a href="#contact" className="btn-primary text-base text-center">
                             Prenota una Demo <ArrowRight className="w-5 h-5" />
                         </a>
@@ -217,88 +195,96 @@ const ProductsOverview = () => {
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
             gsap.from(".product-card", {
-                scrollTrigger: { trigger: container.current, start: "top 75%" },
                 y: 40,
                 opacity: 0,
-                stagger: 0.15,
+                stagger: 0.2,
                 duration: 0.8,
-                ease: "power3.out"
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: ".products-grid",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
             });
         }, container);
         return () => ctx.revert();
     }, []);
 
     return (
-        <section ref={container} className="section-padding bg-subtle">
-            <div className="max-w-7xl mx-auto">
+        <section ref={container} className="py-16 sm:py-24 md:py-28 bg-gradient-to-b from-white to-accentLight/30 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
                 <div className="text-center mb-12 sm:mb-16">
-                    <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">I nostri prodotti</p>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-dark">
-                        Due strumenti. Un ecosistema.
-                    </h2>
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4 sm:mb-6">Due piattaforme, infinite possibilità</h2>
+                    <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto">Gestisci budget e sostenibilità con l'intelligenza artificiale</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                    {/* ECAI-Budget Card */}
-                    <div className="product-card glass-card-strong p-6 sm:p-8 md:p-10 shadow-glass-lg group hover:shadow-glass-xl transition-shadow duration-500">
-                        <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-5 sm:mb-6">
-                            <BarChart3 className="w-6 sm:w-7 h-6 sm:h-7 text-accent" />
+                <div className="products-grid grid md:grid-cols-2 gap-6 sm:gap-8">
+                    {/* ECAI-Budget Product Card */}
+                    <div className="product-card glass-card-strong rounded-2xl p-6 sm:p-8 border border-black/5 hover:border-accent/20 transition-all duration-300 hover:shadow-glass-xl overflow-hidden relative group">
+                        <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-500" />
+
+                        <div className="relative z-10">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 mb-4">
+                                <BarChart3 className="w-4 h-4 text-accent" />
+                                <span className="text-xs font-semibold text-accent">Controllo di Gestione</span>
+                            </div>
+
+                            <h3 className="text-2xl sm:text-3xl font-bold text-dark mb-3">ECAI-Budget</h3>
+                            <p className="text-muted mb-6 leading-relaxed">Automatizza il controllo di gestione con AI che analizza budget, costi e flussi di cassa in tempo reale.</p>
+
+                            <div className="space-y-3 mb-6">
+                                <div className="flex items-start gap-3">
+                                    <Zap className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                                    <span className="text-sm text-dark">Budget vs Actual in tempo reale</span>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                    <TrendingUp className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                                    <span className="text-sm text-dark">Forecast intelligenti per previsioni accurate</span>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                    <Brain className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                                    <span className="text-sm text-dark">Anomalie e inefficienze identificate automaticamente</span>
+                                </div>
+                            </div>
+
+                            <a href="#budget" className="inline-flex items-center gap-2 text-accent font-semibold hover:gap-3 transition-all">
+                                Scopri di più <ArrowRight className="w-4 h-4" />
+                            </a>
                         </div>
-                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-dark mb-3 sm:mb-4">ECAI-Budget</h3>
-                        <p className="text-muted leading-relaxed mb-5 sm:mb-6 text-sm sm:text-base">
-                            Controllo di gestione AI-driven. Analisi predittive dei costi,
-                            gestione dinamica del budget e previsione dei flussi di cassa
-                            alimentata dai tuoi dati reali.
-                        </p>
-                        <ul className="space-y-3 mb-6 sm:mb-8">
-                            {[
-                                "Budget predittivo con machine learning",
-                                "Analisi scostamenti in tempo reale",
-                                "Cash flow forecasting automatico",
-                                "KPI dashboard personalizzabile"
-                            ].map((item, i) => (
-                                <li key={i} className="flex items-center gap-3 text-sm text-dark/80">
-                                    <div className="w-5 h-5 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                                        <ChevronRight className="w-3 h-3 text-accent" />
-                                    </div>
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                        <a href="#budget" className="inline-flex items-center gap-2 text-accent font-semibold text-sm group-hover:gap-3 transition-all">
-                            Scopri ECAI-Budget <ArrowUpRight className="w-4 h-4" />
-                        </a>
                     </div>
 
-                    {/* VSME ESG Card */}
-                    <div className="product-card glass-card-strong p-6 sm:p-8 md:p-10 shadow-glass-lg group hover:shadow-glass-xl transition-shadow duration-500">
-                        <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-accentLime/15 flex items-center justify-center mb-5 sm:mb-6">
-                            <FileText className="w-6 sm:w-7 h-6 sm:h-7 text-accentLime" />
+                    {/* Report VSME ESG Product Card */}
+                    <div className="product-card glass-card-strong rounded-2xl p-6 sm:p-8 border border-black/5 hover:border-accent/20 transition-all duration-300 hover:shadow-glass-xl overflow-hidden relative group">
+                        <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-500" />
+
+                        <div className="relative z-10">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 mb-4">
+                                <Leaf className="w-4 h-4 text-accent" />
+                                <span className="text-xs font-semibold text-accent">Sostenibilità</span>
+                            </div>
+
+                            <h3 className="text-2xl sm:text-3xl font-bold text-dark mb-3">Report VSME ESG</h3>
+                            <p className="text-muted mb-6 leading-relaxed">Genera report ESG standardizzati secondo le direttive CSRD per comunicare la sostenibilità dell'azienda.</p>
+
+                            <div className="space-y-3 mb-6">
+                                <div className="flex items-start gap-3">
+                                    <Trees className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                                    <span className="text-sm text-dark">Calcolo automatico impronta ecologica e carbon footprint</span>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                    <FileText className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                                    <span className="text-sm text-dark">Report compliant con standard CSRD</span>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                    <Shield className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                                    <span className="text-sm text-dark">Audit trail completo per compliance</span>
+                                </div>
+                            </div>
+
+                            <a href="#vsme" className="inline-flex items-center gap-2 text-accent font-semibold hover:gap-3 transition-all">
+                                Scopri di più <ArrowRight className="w-4 h-4" />
+                            </a>
                         </div>
-                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-dark mb-3 sm:mb-4">Report VSME ESG</h3>
-                        <p className="text-muted leading-relaxed mb-5 sm:mb-6 text-sm sm:text-base">
-                            Generazione automatica del bilancio di sostenibilità VSME.
-                            Compliance europea, raccolta dati guidata e report pronti
-                            per gli stakeholder.
-                        </p>
-                        <ul className="space-y-3 mb-6 sm:mb-8">
-                            {[
-                                "Compliance CSRD/VSME automatica",
-                                "Raccolta dati ESG guidata da AI",
-                                "Calcolo carbon footprint integrato",
-                                "Report PDF/XBRL export ready"
-                            ].map((item, i) => (
-                                <li key={i} className="flex items-center gap-3 text-sm text-dark/80">
-                                    <div className="w-5 h-5 rounded-full bg-accentLime/15 flex items-center justify-center flex-shrink-0">
-                                        <ChevronRight className="w-3 h-3 text-accentLime" />
-                                    </div>
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                        <a href="#vsme" className="inline-flex items-center gap-2 text-accentLime font-semibold text-sm group-hover:gap-3 transition-all">
-                            Scopri Report VSME <ArrowUpRight className="w-4 h-4" />
-                        </a>
                     </div>
                 </div>
             </div>
@@ -306,76 +292,75 @@ const ProductsOverview = () => {
     );
 };
 
-/* ─── BUDGET DASHBOARD SECTION ─── */
+/* ─── BUDGET DASHBOARD ─── */
 const BudgetDashboard = () => {
     const container = useRef();
     const [activeTab, setActiveTab] = useState('overview');
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.from(".budget-title", {
-                scrollTrigger: { trigger: container.current, start: "top 70%" },
-                y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-            });
-            gsap.from(".budget-dash", {
-                scrollTrigger: { trigger: container.current, start: "top 60%" },
-                y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2
+            gsap.from(".dashboard-el", {
+                y: 30,
+                opacity: 0,
+                stagger: 0.15,
+                duration: 0.8,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: ".dashboard-container",
+                    start: "top 65%",
+                    toggleActions: "play none none none"
+                }
             });
         }, container);
         return () => ctx.revert();
     }, []);
 
     const tabs = [
-        { id: 'overview', label: 'Overview' },
+        { id: 'overview', label: 'Panoramica Budget' },
         { id: 'analysis', label: 'Analisi Costi' },
-        { id: 'forecast', label: 'Forecast' },
+        { id: 'forecast', label: 'Forecast' }
     ];
 
     return (
-        <section ref={container} id="budget" className="section-padding bg-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[100px]" />
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accentLime/[0.04] rounded-full blur-[80px]" />
-
-            <div className="max-w-7xl mx-auto relative z-10">
-                <div className="budget-title max-w-2xl mb-10 sm:mb-12">
-                    <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">ECAI-Budget</p>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-dark mb-4">
-                        Il tuo budget,
-                        <br />in tempo reale.
-                    </h2>
-                    <p className="text-muted text-base sm:text-lg leading-relaxed">
-                        Dashboard interattiva con analisi predittive, scostamenti automatici
-                        e forecast AI. Tutto in un'unica vista.
-                    </p>
+        <section ref={container} id="budget" className="py-16 sm:py-24 md:py-28 bg-white relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+                <div className="dashboard-el mb-8 sm:mb-12 text-center md:text-left">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-2">ECAI-Budget</h2>
+                    <p className="text-muted text-base sm:text-lg">Controllo di gestione intelligente in tempo reale</p>
                 </div>
 
-                {/* Dashboard Preview */}
-                <div className="budget-dash dashboard-frame p-2 md:p-3">
-                    {/* Title bar */}
-                    <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-black/[0.04]">
-                        <div className="flex items-center gap-2">
-                            <div className="flex gap-1.5">
-                                <div className="w-3 h-3 rounded-full bg-red-400/80" />
-                                <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
-                                <div className="w-3 h-3 rounded-full bg-green-400/80" />
-                            </div>
-                            <span className="text-xs font-mono text-muted ml-3 hidden sm:block">ecai-budget.econova.ai</span>
+                <div className="dashboard-container dashboard-el glass-card-strong rounded-3xl p-6 sm:p-8 md:p-10 border border-black/5 shadow-glass-xl overflow-hidden">
+                    {/* Dashboard Header */}
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-black/5">
+                        <div>
+                            <h3 className="text-lg sm:text-xl font-bold text-dark">www.econova.ai</h3>
+                            <p className="text-sm text-muted mt-1">Gestione budget mensile — Marzo 2024</p>
                         </div>
-                        <div className="flex items-center gap-2 sm:gap-4">
-                            {tabs.map(tab => (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    className={`text-[10px] sm:text-xs font-medium px-2 sm:px-3 py-1.5 rounded-lg transition-all ${activeTab === tab.id ? 'bg-accent text-white' : 'text-muted hover:text-dark hover:bg-black/[0.04]'}`}
-                                >
-                                    {tab.label}
-                                </button>
-                            ))}
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 rounded-full">
+                            <div className="w-2 h-2 bg-[#0071e3] rounded-full animate-pulse" />
+                            <span className="text-xs font-medium text-[#0071e3]">Connesso</span>
                         </div>
                     </div>
 
-                    {/* Dashboard content */}
-                    <div className="p-4 sm:p-5 md:p-8">
+                    {/* Tab Navigation */}
+                    <div className="flex gap-2 sm:gap-4 mb-8 flex-wrap sm:flex-nowrap border-b border-black/5 pb-4">
+                        {tabs.map(tab => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all whitespace-nowrap ${
+                                    activeTab === tab.id
+                                        ? 'bg-[#0071e3] text-white'
+                                        : 'text-muted hover:text-dark bg-transparent'
+                                }`}
+                            >
+                                {tab.label}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Tab Content */}
+                    <div className="min-h-[500px]">
                         {activeTab === 'overview' && <BudgetOverviewTab />}
                         {activeTab === 'analysis' && <BudgetAnalysisTab />}
                         {activeTab === 'forecast' && <BudgetForecastTab />}
@@ -386,371 +371,541 @@ const BudgetDashboard = () => {
     );
 };
 
+/* ─── BUDGET OVERVIEW TAB ─── */
 const BudgetOverviewTab = () => (
-    <div className="space-y-4 sm:space-y-6">
-        {/* KPI row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-            {[
-                { label: "Ricavi Totali", value: "€ 1.24M", change: "+8.2%", positive: true },
-                { label: "Costi Operativi", value: "€ 842K", change: "-3.1%", positive: true },
-                { label: "Margine Netto", value: "32.1%", change: "+2.4pp", positive: true },
-                { label: "Cash Flow", value: "€ 398K", change: "+15.7%", positive: true },
-            ].map((kpi, i) => (
-                <div key={i} className="bg-subtle rounded-xl sm:rounded-2xl p-3 sm:p-5">
-                    <div className="text-[10px] sm:text-xs text-muted font-medium mb-1 sm:mb-2">{kpi.label}</div>
-                    <div className="text-lg sm:text-xl md:text-2xl font-bold text-dark">{kpi.value}</div>
-                    <div className={`text-[10px] sm:text-xs font-semibold mt-1 ${kpi.positive ? 'text-green-600' : 'text-red-500'}`}>
-                        {kpi.change}
-                    </div>
+    <div className="space-y-8">
+        {/* KPI Cards — horizontal scroll on mobile */}
+        <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 sm:pb-0 snap-x snap-mandatory sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible scrollbar-hide">
+            <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-5 border border-blue-100 min-w-[200px] sm:min-w-0 snap-start">
+                <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono text-muted uppercase tracking-wider">Budget Totale</span>
+                    <BarChart3 className="w-4 h-4 text-[#0071e3]" />
                 </div>
-            ))}
-        </div>
-
-        {/* Chart area */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="md:col-span-2 bg-subtle rounded-2xl p-4 sm:p-6">
-                <div className="flex items-center justify-between mb-4 sm:mb-6">
-                    <span className="text-xs sm:text-sm font-semibold text-dark">Andamento Budget vs Actual</span>
-                    <span className="text-[10px] sm:text-xs text-muted font-mono">Q1 2026</span>
-                </div>
-                <div className="flex items-end gap-1.5 sm:gap-3 h-28 sm:h-40">
-                    {[
-                        { budget: 65, actual: 58, label: "Gen" },
-                        { budget: 70, actual: 72, label: "Feb" },
-                        { budget: 60, actual: 55, label: "Mar" },
-                        { budget: 75, actual: 68, label: "Apr" },
-                        { budget: 80, actual: 78, label: "Mag" },
-                        { budget: 72, actual: 70, label: "Giu" },
-                        { budget: 85, actual: 82, label: "Lug" },
-                        { budget: 78, actual: 80, label: "Ago" },
-                        { budget: 90, actual: 88, label: "Set" },
-                        { budget: 82, actual: 85, label: "Ott" },
-                        { budget: 88, actual: 90, label: "Nov" },
-                        { budget: 95, actual: 92, label: "Dic" },
-                    ].map((d, i) => (
-                        <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                            <div className="w-full flex gap-0.5 items-end" style={{ height: '120px' }}>
-                                <div className="flex-1 bg-accent/20 rounded-t-sm" style={{ height: `${d.budget}%` }} />
-                                <div className="flex-1 bg-accent rounded-t-sm" style={{ height: `${d.actual}%` }} />
-                            </div>
-                            <span className="text-[8px] sm:text-[10px] text-muted">{d.label}</span>
-                        </div>
-                    ))}
-                </div>
-                <div className="flex items-center gap-4 sm:gap-6 mt-3 sm:mt-4">
-                    <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-sm bg-accent/20" />
-                        <span className="text-[10px] sm:text-xs text-muted">Budget</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-sm bg-accent" />
-                        <span className="text-[10px] sm:text-xs text-muted">Actual</span>
-                    </div>
+                <div className="text-2xl sm:text-3xl font-bold text-dark">€ 842K</div>
+                <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                    +8.2%
                 </div>
             </div>
 
-            {/* Side panel */}
-            <div className="bg-subtle rounded-2xl p-4 sm:p-6 flex flex-col justify-between">
+            <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-5 border border-blue-100 min-w-[200px] sm:min-w-0 snap-start">
+                <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono text-muted uppercase tracking-wider">Speso</span>
+                    <TrendingUp className="w-4 h-4 text-[#0071e3]" />
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold text-dark">€ 756K</div>
+                <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 bg-orange-50 px-2 py-1 rounded-full">
+                    89.8%
+                </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-5 border border-blue-100 min-w-[200px] sm:min-w-0 snap-start">
+                <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono text-muted uppercase tracking-wider">Disponibile</span>
+                    <PieChart className="w-4 h-4 text-[#0071e3]" />
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold text-dark">€ 86K</div>
+                <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                    10.2%
+                </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-5 border border-blue-100 min-w-[200px] sm:min-w-0 snap-start">
+                <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono text-muted uppercase tracking-wider">EBIT</span>
+                    <Zap className="w-4 h-4 text-[#0071e3]" />
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold text-dark">€ 186K</div>
+                <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                    +5.8%
+                </div>
+            </div>
+        </div>
+
+        {/* Budget Distribution Chart */}
+        <div className="bg-white rounded-xl border border-black/5 p-6 sm:p-8">
+            <h4 className="font-semibold text-dark mb-6">Distribuzione Budget per Centro di Costo</h4>
+            <div className="space-y-4">
                 <div>
-                    <span className="text-xs sm:text-sm font-semibold text-dark">Distribuzione Costi</span>
-                    <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
-                        {[
-                            { label: "Personale", pct: 42, color: "bg-accent" },
-                            { label: "Materiali", pct: 28, color: "bg-accentLime" },
-                            { label: "Servizi", pct: 18, color: "bg-green-400" },
-                            { label: "Altro", pct: 12, color: "bg-gray-400" },
-                        ].map((item, i) => (
-                            <div key={i}>
-                                <div className="flex justify-between text-xs mb-1">
-                                    <span className="text-dark/70">{item.label}</span>
-                                    <span className="font-mono text-muted">{item.pct}%</span>
-                                </div>
-                                <div className="h-1.5 bg-black/[0.04] rounded-full overflow-hidden">
-                                    <div className={`h-full ${item.color} rounded-full`} style={{ width: `${item.pct}%` }} />
-                                </div>
-                            </div>
-                        ))}
+                    <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-dark">Costi Industriali</span>
+                        <span className="text-sm font-semibold text-[#0071e3]">€ 520K</span>
+                    </div>
+                    <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                        <div className="bg-[#0071e3] h-full rounded-full" style={{ width: '61.7%' }} />
                     </div>
                 </div>
-                <div className="mt-4 sm:mt-6 pt-4 border-t border-black/[0.04]">
-                    <div className="text-xs text-muted">Budget residuo Q1</div>
-                    <div className="text-xl sm:text-2xl font-bold text-dark">€ 156.200</div>
+
+                <div>
+                    <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-dark">Costi Commerciali</span>
+                        <span className="text-sm font-semibold text-purple-500">€ 195K</span>
+                    </div>
+                    <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                        <div className="bg-purple-500 h-full rounded-full" style={{ width: '23.2%' }} />
+                    </div>
+                </div>
+
+                <div>
+                    <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-dark">Costi Amministrativi</span>
+                        <span className="text-sm font-semibold text-pink-500">€ 127K</span>
+                    </div>
+                    <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                        <div className="bg-pink-500 h-full rounded-full" style={{ width: '15.1%' }} />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 );
 
-const BudgetAnalysisTab = () => (
-    <div className="space-y-4 sm:space-y-6">
-        <div className="bg-subtle rounded-2xl p-4 sm:p-6">
-            <span className="text-xs sm:text-sm font-semibold text-dark">Analisi Scostamenti per Centro di Costo</span>
-            <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
-                {[
-                    { label: "Produzione", budget: "€ 320K", actual: "€ 298K", delta: "-6.9%", positive: true },
-                    { label: "Marketing", budget: "€ 85K", actual: "€ 92K", delta: "+8.2%", positive: false },
-                    { label: "R&D", budget: "€ 150K", actual: "€ 145K", delta: "-3.3%", positive: true },
-                    { label: "Amministrazione", budget: "€ 120K", actual: "€ 118K", delta: "-1.7%", positive: true },
-                    { label: "Logistica", budget: "€ 95K", actual: "€ 102K", delta: "+7.4%", positive: false },
-                ].map((row, i) => (
-                    <div key={i} className="flex items-center justify-between py-2 sm:py-3 border-b border-black/[0.03] last:border-0 gap-2">
-                        <span className="text-xs sm:text-sm text-dark font-medium w-24 sm:w-36">{row.label}</span>
-                        <span className="text-xs sm:text-sm text-muted font-mono hidden sm:block">{row.budget}</span>
-                        <span className="text-xs sm:text-sm text-dark font-mono font-medium">{row.actual}</span>
-                        <span className={`text-xs font-mono font-bold px-2 sm:px-3 py-1 rounded-lg ${row.positive ? 'text-green-700 bg-green-50' : 'text-red-600 bg-red-50'}`}>
-                            {row.delta}
-                        </span>
+/* ─── BUDGET ANALYSIS TAB ─── */
+const BudgetAnalysisTab = () => {
+    const [expandedCategory, setExpandedCategory] = useState('industrial');
+
+    const categories = {
+        industrial: {
+            name: 'Costi Industriali',
+            total: '€520K',
+            items: [
+                { label: 'Materie prime', value: '€185K', budget: '€190K', delta: '-2.6%', positive: true },
+                { label: 'Manodopera diretta', value: '€142K', budget: '€138K', delta: '+2.9%', positive: false },
+                { label: 'Energia e utilities', value: '€98K', budget: '€105K', delta: '-6.7%', positive: true },
+                { label: 'Manutenzione impianti', value: '€95K', budget: '€87K', delta: '+9.2%', positive: false }
+            ]
+        },
+        commercial: {
+            name: 'Costi Commerciali',
+            total: '€195K',
+            items: [
+                { label: 'Marketing e pubblicità', value: '€72K', budget: '€65K', delta: '+10.8%', positive: false },
+                { label: 'Rete vendita', value: '€68K', budget: '€70K', delta: '-2.9%', positive: true },
+                { label: 'Logistica e trasporti', value: '€55K', budget: '€60K', delta: '-8.3%', positive: true }
+            ]
+        },
+        admin: {
+            name: 'Costi Amministrativi',
+            total: '€127K',
+            items: [
+                { label: 'Personale amministrativo', value: '€78K', budget: '€80K', delta: '-2.5%', positive: true },
+                { label: 'Consulenze professionali', value: '€32K', budget: '€28K', delta: '+14.3%', positive: false },
+                { label: 'IT e infrastruttura', value: '€17K', budget: '€19K', delta: '-10.5%', positive: true }
+            ]
+        }
+    };
+
+    const alerts = [
+        { type: 'warning', text: 'Marketing ha superato il budget del 10.8% — valutare riallocazione' },
+        { type: 'alert', text: 'Manutenzione impianti: +9.2% oltre budget, verificare ordini Q2' },
+        { type: 'info', text: 'Energia sotto budget: -6.7%, risparmi da efficientamento' }
+    ];
+
+    return (
+        <div className="space-y-8">
+            {/* Cost Categories */}
+            <div className="space-y-4">
+                {Object.entries(categories).map(([key, category]) => (
+                    <div key={key} className="border border-black/5 rounded-xl overflow-hidden">
+                        <button
+                            onClick={() => setExpandedCategory(expandedCategory === key ? null : key)}
+                            className="w-full px-6 py-4 bg-gradient-to-r from-white to-blue-50 hover:to-blue-100 transition-all flex items-center justify-between"
+                        >
+                            <div className="flex items-center gap-3">
+                                <ChevronRight className={`w-5 h-5 text-[#0071e3] transition-transform ${expandedCategory === key ? 'rotate-90' : ''}`} />
+                                <div className="text-left">
+                                    <h4 className="font-semibold text-dark">{category.name}</h4>
+                                    <p className="text-sm text-muted">Totale: {category.total}</p>
+                                </div>
+                            </div>
+                        </button>
+
+                        {expandedCategory === key && (
+                            <div className="px-6 py-4 bg-white space-y-3 border-t border-black/5">
+                                {category.items.map((item, i) => (
+                                    <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <div>
+                                            <p className="font-medium text-dark text-sm">{item.label}</p>
+                                            <p className="text-xs text-muted">Budget: {item.budget}</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="font-semibold text-dark text-sm">{item.value}</p>
+                                            <p className={`text-xs font-medium ${item.positive ? 'text-green-600' : 'text-orange-600'}`}>
+                                                {item.delta}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-subtle rounded-2xl p-4 sm:p-6">
-                <div className="text-xs sm:text-sm font-semibold text-dark mb-3 sm:mb-4">Alert AI</div>
+            {/* Alert AI Section */}
+            <div className="bg-white rounded-xl border border-black/5 p-6 sm:p-8">
+                <div className="flex items-center gap-2 mb-6">
+                    <Brain className="w-5 h-5 text-[#0071e3]" />
+                    <h4 className="font-semibold text-dark">Alert AI</h4>
+                </div>
+
                 <div className="space-y-3">
-                    {[
-                        { text: "Marketing ha superato il budget del 8.2%", type: "warning" },
-                        { text: "Rischio overrun su Logistica: tendenza Q2", type: "alert" },
-                        { text: "R&D sotto budget: possibilità riallocazione", type: "info" },
-                    ].map((alert, i) => (
-                        <div key={i} className={`flex items-start gap-3 p-3 rounded-xl ${
-                            alert.type === 'warning' ? 'bg-yellow-50' : alert.type === 'alert' ? 'bg-red-50' : 'bg-green-50'
-                        }`}>
-                            <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
-                                alert.type === 'warning' ? 'bg-yellow-500' : alert.type === 'alert' ? 'bg-red-500' : 'bg-accent'
-                            }`} />
-                            <span className="text-xs text-dark/80">{alert.text}</span>
-                        </div>
-                    ))}
+                    {alerts.map((alert, i) => {
+                        let bgColor = 'bg-blue-50';
+                        let textColor = 'text-[#0071e3]';
+                        let dotColor = 'bg-[#0071e3]';
+
+                        if (alert.type === 'warning') {
+                            bgColor = 'bg-orange-50';
+                            textColor = 'text-orange-700';
+                            dotColor = 'bg-orange-500';
+                        } else if (alert.type === 'alert') {
+                            bgColor = 'bg-red-50';
+                            textColor = 'text-red-700';
+                            dotColor = 'bg-red-500';
+                        }
+
+                        return (
+                            <div key={i} className={`${bgColor} rounded-lg p-4 flex items-start gap-3`}>
+                                <div className={`w-2.5 h-2.5 ${dotColor} rounded-full flex-shrink-0 mt-1.5`} />
+                                <p className={`${textColor} text-sm font-medium`}>{alert.text}</p>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
-            <div className="bg-subtle rounded-2xl p-4 sm:p-6">
-                <div className="text-xs sm:text-sm font-semibold text-dark mb-2">Efficienza Budget</div>
-                <div className="text-4xl sm:text-5xl font-bold text-dark mt-3 sm:mt-4">94.2<span className="text-xl sm:text-2xl text-muted">%</span></div>
-                <div className="text-xs text-green-600 font-medium mt-2">+3.1% rispetto al trimestre precedente</div>
-                <div className="mt-4 sm:mt-6 h-2 bg-black/[0.04] rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-accent to-accentLime rounded-full" style={{ width: '94.2%' }} />
+
+            {/* Efficienza Budget */}
+            <div className="bg-white rounded-xl border border-black/5 p-6 sm:p-8">
+                <h4 className="font-semibold text-dark mb-6">Efficienza Budget</h4>
+                <div className="space-y-6">
+                    <div>
+                        <div className="flex items-center justify-between mb-3">
+                            <span className="text-sm font-medium text-dark">Utilizzo Totale</span>
+                            <span className="text-lg font-bold text-[#0071e3]">89.8%</span>
+                        </div>
+                        <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
+                            <div
+                                className="h-full rounded-full bg-gradient-to-r from-[#0071e3] to-[#0071e3]/60"
+                                style={{ width: '89.8%' }}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <div className="p-3 bg-blue-50 rounded-lg text-center">
+                            <p className="text-xs text-muted mb-1">Margine Disponibile</p>
+                            <p className="font-bold text-[#0071e3]">10.2%</p>
+                        </div>
+                        <div className="p-3 bg-green-50 rounded-lg text-center">
+                            <p className="text-xs text-muted mb-1">Risparmi Realizzati</p>
+                            <p className="font-bold text-green-600">€ 45K</p>
+                        </div>
+                        <div className="p-3 bg-orange-50 rounded-lg text-center">
+                            <p className="text-xs text-muted mb-1">Sforamento</p>
+                            <p className="font-bold text-orange-600">€ 12K</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
+/* ─── BUDGET FORECAST TAB ─── */
 const BudgetForecastTab = () => (
-    <div className="space-y-4 sm:space-y-6">
-        <div className="bg-subtle rounded-2xl p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-2">
-                <span className="text-xs sm:text-sm font-semibold text-dark">Previsione Cash Flow — Prossimi 6 Mesi</span>
-                <div className="flex items-center gap-3 text-xs">
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent" /> Previsto</span>
-                    <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-accent/30" /> Range</span>
-                </div>
-            </div>
-            <svg viewBox="0 0 600 150" className="w-full" preserveAspectRatio="none">
-                <path d="M0,90 C100,70 150,60 200,55 C250,50 300,45 350,50 C400,55 450,40 500,35 L500,80 C450,85 400,90 350,95 C300,100 250,95 200,90 C150,85 100,95 0,110 Z" fill="rgba(43,122,14,0.08)" />
-                <path d="M0,100 C100,80 150,70 200,72 C250,74 300,68 350,70 C400,72 450,60 500,55" fill="none" stroke="#2B7A0E" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M0,100 C30,95 60,92 100,80" fill="none" stroke="#2B7A0E" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.4" />
-                {[[200, 72], [300, 68], [400, 72], [500, 55]].map(([x, y], i) => (
-                    <circle key={i} cx={x} cy={y} r="4" fill="white" stroke="#2B7A0E" strokeWidth="2" />
+    <div className="space-y-8">
+        {/* Forecast Chart */}
+        <div className="bg-white rounded-xl border border-black/5 p-6 sm:p-8">
+            <h4 className="font-semibold text-dark mb-6">Budget Forecast — Q2 2024</h4>
+
+            <svg viewBox="0 0 800 300" className="w-full h-auto mb-6">
+                {/* Grid */}
+                {[0, 1, 2, 3, 4].map(i => (
+                    <line key={`hline-${i}`} x1="60" y1={30 + i * 60} x2="750" y2={30 + i * 60} stroke="#e5e7eb" strokeWidth="1" />
+                ))}
+                {[0, 1, 2, 3, 4, 5].map(i => (
+                    <line key={`vline-${i}`} x1={60 + i * 140} y1="20" x2={60 + i * 140} y2="280" stroke="#e5e7eb" strokeWidth="1" />
+                ))}
+
+                {/* X-axis labels */}
+                <text x="60" y="300" textAnchor="middle" className="text-xs fill-muted">Apr</text>
+                <text x="200" y="300" textAnchor="middle" className="text-xs fill-muted">Mag</text>
+                <text x="340" y="300" textAnchor="middle" className="text-xs fill-muted">Giu</text>
+                <text x="480" y="300" textAnchor="middle" className="text-xs fill-muted">Lug</text>
+                <text x="620" y="300" textAnchor="middle" className="text-xs fill-muted">Ago</text>
+                <text x="750" y="300" textAnchor="middle" className="text-xs fill-muted">Set</text>
+
+                {/* Y-axis label */}
+                <text x="20" y="160" textAnchor="middle" className="text-xs fill-muted">€800K</text>
+
+                {/* Expected (solid line) */}
+                <polyline
+                    points="60,200 200,160 340,180 480,140 620,120 750,100"
+                    fill="none"
+                    stroke="#0071e3"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+
+                {/* Data points for Expected */}
+                {[{x: 60, y: 200}, {x: 200, y: 160}, {x: 340, y: 180}, {x: 480, y: 140}, {x: 620, y: 120}, {x: 750, y: 100}].map((p, i) => (
+                    <circle key={`dot-expected-${i}`} cx={p.x} cy={p.y} r="4" fill="white" stroke="#0071e3" strokeWidth="2" />
+                ))}
+
+                {/* Actual (dashed line) */}
+                <polyline
+                    points="60,220 200,190 340,210 480,175 620,155 750,130"
+                    fill="none"
+                    stroke="#60a5fa"
+                    strokeWidth="3"
+                    strokeDasharray="5,5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+
+                {/* Data points for Actual */}
+                {[{x: 60, y: 220}, {x: 200, y: 190}, {x: 340, y: 210}, {x: 480, y: 175}, {x: 620, y: 155}, {x: 750, y: 130}].map((p, i) => (
+                    <circle key={`dot-actual-${i}`} cx={p.x} cy={p.y} r="3.5" fill="#60a5fa" />
                 ))}
             </svg>
-            <div className="flex justify-between mt-2 text-[10px] text-muted font-mono">
-                {["Apr", "Mag", "Giu", "Lug", "Ago", "Set"].map(m => <span key={m}>{m}</span>)}
+
+            {/* Legend */}
+            <div className="flex items-center justify-center gap-8">
+                <div className="flex items-center gap-2">
+                    <div className="w-3 h-0.5 bg-[#0071e3]" />
+                    <span className="text-sm text-muted">Previsto</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <div className="w-3 h-0.5 bg-[#60a5fa]" style={{ backgroundImage: 'repeating-linear-gradient(90deg, #60a5fa 0, #60a5fa 2px, transparent 2px, transparent 5px)' }} />
+                    <span className="text-sm text-muted">Actual</span>
+                </div>
             </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-            {[
-                { label: "Ricavi Previsti Q2", value: "€ 1.38M", icon: TrendingUp, change: "+11.3%" },
-                { label: "Rischio Liquidità", value: "Basso", icon: Shield, change: "Stabile" },
-                { label: "ROI Previsto", value: "18.4%", icon: Target, change: "+2.1pp" },
-            ].map((card, i) => (
-                <div key={i} className="bg-subtle rounded-2xl p-4 sm:p-5">
-                    <card.icon className="w-5 h-5 text-accent mb-2 sm:mb-3" />
-                    <div className="text-[10px] sm:text-xs text-muted mb-1">{card.label}</div>
-                    <div className="text-lg sm:text-xl font-bold text-dark">{card.value}</div>
-                    <div className="text-[10px] sm:text-xs text-green-600 font-medium mt-1">{card.change}</div>
+        {/* Forecast Metrics Cards — horizontal scroll on mobile */}
+        <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 sm:pb-0 snap-x snap-mandatory sm:grid sm:grid-cols-3 sm:overflow-visible scrollbar-hide">
+            <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-5 border border-blue-100 min-w-[220px] sm:min-w-0 snap-start">
+                <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono text-muted uppercase tracking-wider">Ricavi Previsti Q2</span>
+                    <TrendingUp className="w-4 h-4 text-[#0071e3]" />
                 </div>
-            ))}
+                <div className="text-2xl sm:text-3xl font-bold text-dark">€ 1.38M</div>
+                <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                    +11.3%
+                </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-5 border border-blue-100 min-w-[220px] sm:min-w-0 snap-start">
+                <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono text-muted uppercase tracking-wider">Margini Previsti</span>
+                    <BarChart3 className="w-4 h-4 text-[#0071e3]" />
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold text-dark">34.2%</div>
+                <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                    +2.8pp
+                </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-5 border border-blue-100 min-w-[220px] sm:min-w-0 snap-start">
+                <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono text-muted uppercase tracking-wider">ROI Previsto</span>
+                    <Zap className="w-4 h-4 text-[#0071e3]" />
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold text-dark">18.4%</div>
+                <div className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                    +2.1pp
+                </div>
+            </div>
         </div>
     </div>
 );
 
-/* ─── VSME ESG DASHBOARD SECTION (redesigned with green sidebar) ─── */
+/* ─── VSME DASHBOARD ─── */
 const VsmeDashboard = () => {
     const container = useRef();
     const [activeModule, setActiveModule] = useState('acqua');
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.from(".vsme-title", {
-                scrollTrigger: { trigger: container.current, start: "top 70%" },
-                y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-            });
-            gsap.from(".vsme-dash", {
-                scrollTrigger: { trigger: container.current, start: "top 60%" },
-                y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2
+            gsap.from(".vsme-el", {
+                y: 30,
+                opacity: 0,
+                stagger: 0.15,
+                duration: 0.8,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: ".vsme-container",
+                    start: "top 65%",
+                    toggleActions: "play none none none"
+                }
             });
         }, container);
         return () => ctx.revert();
     }, []);
 
     const modules = [
-        { id: 'forza-lavoro', label: 'Forza Lavoro', icon: Users, pct: 65 },
-        { id: 'dati', label: 'Dati di Riferimento', icon: Database, pct: 40 },
-        { id: 'energia', label: 'Efficienza Energetica', icon: Lightbulb, pct: 72 },
-        { id: 'risorse', label: 'Efficienza Risorse', icon: Recycle, pct: 55 },
-        { id: 'acqua', label: 'Acqua', icon: Droplets, pct: 80 },
-        { id: 'rifiuti', label: 'Rifiuti', icon: Truck, pct: 18 },
-        { id: 'biodiversita', label: 'Biodiversità', icon: Trees, pct: 30 },
-        { id: 'refrigeranti', label: 'Refrigeranti', icon: Thermometer, pct: 0 },
+        { id: 'acqua', name: 'Acqua', icon: Droplets, pct: 72 },
+        { id: 'energia', name: 'Energia', icon: Flame, pct: 58 },
+        { id: 'rifiuti', name: 'Rifiuti', icon: Recycle, pct: 45 },
+        { id: 'persone', name: 'Persone', icon: Users, pct: 68 }
     ];
 
     const moduleData = {
-        'acqua': {
-            title: 'Acqua',
-            subtitle: 'Modulo Basic · B6',
-            period: '29/10/2024 → 28/10/2024',
-            summary: { days: 201, m3: 118.0, eur: '643.57 €' },
-            rows: [
-                { month: 'Gennaio', consumo: '0.00', costo: '0.00' },
-                { month: 'Febbraio', consumo: '0.00', costo: '0.00' },
-                { month: 'Marzo', consumo: '0.00', costo: '0.00' },
-                { month: 'Aprile', consumo: '11.80', costo: '64.36' },
-                { month: 'Maggio', consumo: '18.29', costo: '99.75' },
-                { month: 'Giugno', consumo: '17.70', costo: '96.54' },
-                { month: 'Luglio', consumo: '18.29', costo: '99.75' },
-                { month: 'Agosto', consumo: '18.29', costo: '99.75' },
-                { month: 'Settembre', consumo: '17.70', costo: '96.54' },
-                { month: 'Ottobre', consumo: '16.52', costo: '90.10' },
+        acqua: {
+            title: 'Gestione dell\'Acqua',
+            subtitle: 'Monitoraggio consumi e compliance normativa',
+            icon: Droplets,
+            metrics: [
+                { label: 'Consumo Totale', value: '2,450 m³', unit: 'al mese', status: 'normal' },
+                { label: 'Riciclo', value: '34%', unit: 'dell\'acqua utilisata', status: 'good' },
+                { label: 'Conformità', value: 'ISO 14001', unit: 'certificazione attiva', status: 'good' }
             ]
         },
+        energia: {
+            title: 'Gestione Energia',
+            subtitle: 'Ottimizzazione consumi ed energie rinnovabili',
+            icon: Flame,
+            metrics: [
+                { label: 'Consumo Totale', value: '450 MWh', unit: 'al mese', status: 'normal' },
+                { label: 'Rinnovabili', value: '28%', unit: 'della produzione', status: 'good' },
+                { label: 'Efficienza', value: '-12%', unit: 'vs anno precedente', status: 'good' }
+            ]
+        },
+        rifiuti: {
+            title: 'Gestione Rifiuti',
+            subtitle: 'Tracciamento e smaltimento responsabile',
+            icon: Recycle,
+            metrics: [
+                { label: 'Rifiuti Totali', value: '156 ton', unit: 'al trimestre', status: 'normal' },
+                { label: 'Recupero', value: '68%', unit: 'dei rifiuti', status: 'good' },
+                { label: 'Conformità', value: 'EMAS', unit: 'registrazione valida', status: 'good' }
+            ]
+        },
+        persone: {
+            title: 'Capitale Umano',
+            subtitle: 'Welfare, formazione e inclusione',
+            icon: Users,
+            metrics: [
+                { label: 'Dipendenti', value: '245', unit: 'in organico', status: 'normal' },
+                { label: 'Ore Formazione', value: '32', unit: 'per dipendente/anno', status: 'good' },
+                { label: 'Diversity', value: '42%', unit: 'donne in azienda', status: 'good' }
+            ]
+        }
     };
 
     const currentData = moduleData[activeModule] || moduleData['acqua'];
     const completionTotal = Math.round(modules.reduce((sum, m) => sum + m.pct, 0) / modules.length);
 
     return (
-        <section ref={container} id="vsme" className="section-padding bg-subtle relative overflow-hidden">
-            <div className="absolute top-20 left-0 w-[600px] h-[600px] bg-accent/[0.03] rounded-full blur-[120px]" />
-
-            <div className="max-w-7xl mx-auto relative z-10">
-                <div className="vsme-title max-w-2xl mb-10 sm:mb-12">
-                    <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">Report VSME ESG</p>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-dark mb-4">
-                        Sostenibilità,
-                        <br />senza burocrazia.
-                    </h2>
-                    <p className="text-muted text-base sm:text-lg leading-relaxed">
-                        L'AI ti guida nella raccolta dati ESG: compila ogni modulo in modo assistito,
-                        valida automaticamente i dati e genera il report VSME conforme alla normativa EU.
-                    </p>
+        <section ref={container} id="vsme" className="py-16 sm:py-24 md:py-28 bg-gradient-to-b from-white to-accentLight/20 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+                <div className="vsme-el mb-8 sm:mb-12 text-center lg:text-left">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-2">Report VSME ESG</h2>
+                    <p className="text-muted text-base sm:text-lg">Sostenibilità e compliance ESG semplificate</p>
                 </div>
 
-                {/* VSME Dashboard Preview — inspired by the green sidebar screenshot */}
-                <div className="vsme-dash dashboard-frame overflow-hidden">
-                    <div className="flex flex-col md:flex-row">
-                        {/* Green sidebar */}
-                        <div className="vsme-sidebar text-white p-4 sm:p-5 md:w-72 flex-shrink-0">
-                            <div className="flex items-center gap-2 mb-5">
-                                <span className="text-base sm:text-lg font-bold">VSME</span>
-                                <span className="text-base sm:text-lg font-light">REPORT</span>
-                                <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full ml-1">v1.2</span>
+                <div className="vsme-container grid lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+                    {/* Sidebar */}
+                    <div className="lg:col-span-1 space-y-3">
+                        <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-glass">
+                            <h4 className="font-semibold text-dark mb-4 text-sm">Moduli ESG</h4>
+                            <div className="space-y-2">
+                                {modules.map(module => {
+                                    const ModuleIcon = module.icon;
+                                    return (
+                                        <button
+                                            key={module.id}
+                                            onClick={() => setActiveModule(module.id)}
+                                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium text-sm ${
+                                                activeModule === module.id
+                                                    ? 'bg-accent text-white shadow-lg'
+                                                    : 'bg-gray-50 text-dark hover:bg-gray-100'
+                                            }`}
+                                        >
+                                            <ModuleIcon className="w-4 h-4 flex-shrink-0" />
+                                            <span className="flex-1 text-left">{module.name}</span>
+                                            <span className={`text-xs font-bold ${activeModule === module.id ? 'text-white' : 'text-accent'}`}>
+                                                {module.pct}%
+                                            </span>
+                                        </button>
+                                    );
+                                })}
                             </div>
+                        </div>
 
-                            {/* Module list */}
-                            <div className="space-y-1">
-                                {modules.map((mod) => (
-                                    <button
-                                        key={mod.id}
-                                        onClick={() => setActiveModule(mod.id)}
-                                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left transition-all text-sm ${
-                                            activeModule === mod.id
-                                                ? 'bg-white/20 text-white'
-                                                : 'text-white/70 hover:bg-white/10 hover:text-white'
-                                        }`}
-                                    >
-                                        <div className="flex items-center gap-2.5">
-                                            <mod.icon className="w-4 h-4 flex-shrink-0" />
-                                            <span className="text-xs sm:text-sm font-medium truncate">{mod.label}</span>
-                                        </div>
-                                        <span className={`text-xs font-bold ${mod.pct > 0 ? 'text-white' : 'text-white/40'}`}>{mod.pct}%</span>
-                                    </button>
-                                ))}
-                            </div>
-
-                            {/* Completion bar */}
-                            <div className="mt-5 pt-4 border-t border-white/20">
-                                <div className="flex items-center justify-between text-xs mb-2">
-                                    <span className="font-medium">Completamento</span>
-                                    <span className="font-bold">{completionTotal}%</span>
+                        {/* Overall Progress */}
+                        <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-glass">
+                            <h4 className="font-semibold text-dark mb-4 text-sm">Completamento Totale</h4>
+                            <div className="mb-4">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-2xl font-bold text-accent">{completionTotal}%</span>
                                 </div>
-                                <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+                                <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
                                     <div
-                                        className="h-full rounded-full transition-all duration-500"
-                                        style={{
-                                            width: `${completionTotal}%`,
-                                            background: `linear-gradient(90deg, #7AC943 0%, #ff4444 ${100 - completionTotal}%, #ff4444 100%)`
-                                        }}
+                                        className="bg-gradient-to-r from-accent to-accentLime h-full rounded-full transition-all duration-300"
+                                        style={{ width: `${completionTotal}%` }}
                                     />
+                                </div>
+                            </div>
+                            <p className="text-xs text-muted">Implementazione compliance CSRD</p>
+                        </div>
+                    </div>
+
+                    {/* Main Content */}
+                    <div className="lg:col-span-2 space-y-6">
+                        {/* Header Card */}
+                        <div className="bg-gradient-to-r from-accent to-accentLime rounded-2xl p-8 sm:p-10 text-white shadow-glass-lg overflow-hidden relative">
+                            <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+                            <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-white/5 rounded-full blur-3xl" />
+
+                            <div className="relative z-10">
+                                <div className="flex items-start gap-4 mb-6">
+                                    <div className="p-3 bg-white/20 rounded-xl">
+                                        {React.createElement(currentData.icon, { className: 'w-8 h-8' })}
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-2xl sm:text-3xl font-bold mb-2">{currentData.title}</h3>
+                                        <p className="text-white/90">{currentData.subtitle}</p>
+                                    </div>
+                                </div>
+
+                                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 rounded-full text-sm font-medium">
+                                    <Target className="w-4 h-4" />
+                                    Modulo attivo
                                 </div>
                             </div>
                         </div>
 
-                        {/* Main content */}
-                        <div className="flex-1 p-4 sm:p-6 md:p-8">
-                            {/* Header */}
-                            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-6">
-                                <div>
-                                    <h3 className="text-xl sm:text-2xl font-bold text-dark">{currentData.title}</h3>
-                                    <p className="text-xs sm:text-sm text-muted">{currentData.subtitle}</p>
+                        {/* Metrics Grid */}
+                        <div className="grid sm:grid-cols-3 gap-4">
+                            {currentData.metrics.map((metric, i) => (
+                                <div key={i} className="bg-white rounded-xl border border-black/5 p-6 shadow-glass hover:shadow-glass-lg transition-shadow">
+                                    <p className="text-xs text-muted uppercase tracking-wider font-mono mb-2">{metric.label}</p>
+                                    <p className="text-2xl sm:text-3xl font-bold text-dark mb-1">{metric.value}</p>
+                                    <p className="text-xs text-muted">{metric.unit}</p>
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <div className="flex items-center gap-2 text-xs text-accent">
-                                        <Brain className="w-4 h-4" />
-                                        <span className="font-medium">AI-Assisted</span>
+                            ))}
+                        </div>
+
+                        {/* Compliance Status */}
+                        <div className="bg-white rounded-xl border border-black/5 p-6 sm:p-8 shadow-glass">
+                            <h4 className="font-semibold text-dark mb-6">Status Compliance</h4>
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200">
+                                    <div className="flex items-center gap-3">
+                                        <Shield className="w-5 h-5 text-green-600" />
+                                        <span className="text-sm font-medium text-dark">CSRD — Compliance verificata</span>
                                     </div>
-                                    <span className="text-xs bg-green-50 text-accent font-medium px-3 py-1.5 rounded-full">Salvato</span>
+                                    <ChevronRight className="w-4 h-4 text-green-600" />
                                 </div>
-                            </div>
-
-                            {/* Summary bar */}
-                            <div className="flex flex-wrap gap-4 sm:gap-6 bg-subtle rounded-xl p-3 sm:p-4 mb-5 text-xs sm:text-sm">
-                                <div><span className="text-muted">Giorni:</span> <span className="font-semibold text-dark">{currentData.summary.days}</span></div>
-                                <div><span className="text-muted">M³:</span> <span className="font-semibold text-dark">{currentData.summary.m3}</span></div>
-                                <div><span className="text-muted">EUR:</span> <span className="font-semibold text-dark">{currentData.summary.eur}</span></div>
-                            </div>
-
-                            {/* AI assistance banner */}
-                            <div className="flex items-start gap-3 bg-accentLight rounded-xl p-3 sm:p-4 mb-5">
-                                <Brain className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                                <div>
-                                    <div className="text-xs sm:text-sm font-semibold text-accent mb-0.5">Raccolta dati assistita da AI</div>
-                                    <div className="text-xs text-dark/70">L'intelligenza artificiale analizza le tue bollette, estrae i dati automaticamente e pre-compila il modulo. Tu verifichi e confermi.</div>
+                                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                    <div className="flex items-center gap-3">
+                                        <FileText className="w-5 h-5 text-[#0071e3]" />
+                                        <span className="text-sm font-medium text-dark">Report Audit — Pronto per esportazione</span>
+                                    </div>
+                                    <ChevronRight className="w-4 h-4 text-[#0071e3]" />
                                 </div>
-                            </div>
-
-                            {/* Data table */}
-                            <div className="overflow-x-auto -mx-4 sm:mx-0">
-                                <table className="w-full text-xs sm:text-sm min-w-[400px]">
-                                    <thead>
-                                        <tr className="border-b border-black/[0.06]">
-                                            <th className="text-left py-3 px-3 sm:px-4 font-semibold text-muted uppercase text-[10px] sm:text-xs tracking-wider">Mese</th>
-                                            <th className="text-right py-3 px-3 sm:px-4 font-semibold text-muted uppercase text-[10px] sm:text-xs tracking-wider">Consumo (M³)</th>
-                                            <th className="text-right py-3 px-3 sm:px-4 font-semibold text-muted uppercase text-[10px] sm:text-xs tracking-wider">Costo (EUR)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {currentData.rows.map((row, i) => (
-                                            <tr key={i} className="border-b border-black/[0.03] hover:bg-subtle/50 transition-colors">
-                                                <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-dark">{row.month}</td>
-                                                <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-right font-mono text-dark">{row.consumo}</td>
-                                                <td className="py-2.5 sm:py-3 px-3 sm:px-4 text-right font-mono text-dark">{row.costo}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -767,40 +922,75 @@ const WhySection = () => {
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
             gsap.from(".why-item", {
-                scrollTrigger: { trigger: container.current, start: "top 70%" },
-                y: 30, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power3.out"
+                y: 30,
+                opacity: 0,
+                stagger: 0.15,
+                duration: 0.8,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: ".why-grid",
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                }
             });
         }, container);
         return () => ctx.revert();
     }, []);
 
     const reasons = [
-        { icon: Zap, title: "Setup in 48h", desc: "Nessuna infrastruttura complessa. Colleghi i tuoi dati e sei operativo in due giorni." },
-        { icon: Shield, title: "GDPR & EU Compliant", desc: "Dati in cloud europeo. Privacy by design. Nessuna condivisione con terze parti." },
-        { icon: PieChart, title: "AI Predittiva", desc: "Modelli di machine learning allenati su pattern finanziari e normative ESG italiane ed europee." },
-        { icon: Target, title: "Per le PMI", desc: "Non un enterprise tool adattato. Costruito nativamente per la realtà delle piccole e medie imprese." },
+        {
+            icon: Brain,
+            title: 'AI Intelligente',
+            desc: 'Machine Learning che impara dai tuoi dati e migliora continuamente le previsioni e le analisi.'
+        },
+        {
+            icon: Zap,
+            title: 'Tempo Reale',
+            desc: 'Dashboard aggiornate in diretta con tutti i dati finanziari e ESG della tua azienda.'
+        },
+        {
+            icon: Target,
+            title: 'User-Friendly',
+            desc: 'Interfaccia intuitiva pensata per PMI che non hanno un data team interno.'
+        },
+        {
+            icon: Shield,
+            title: 'Secure & Compliant',
+            desc: 'Hosted in EU con crittografia end-to-end e compliance a tutti gli standard internazionali.'
+        },
+        {
+            icon: TrendingUp,
+            title: 'Scalabile',
+            desc: 'Cresce con la tua azienda senza complessità di implementazione o training.'
+        },
+        {
+            icon: Lightbulb,
+            title: 'Supporto Dedicato',
+            desc: 'Team di esperti a supporto per implementazione, training e ottimizzazione continua.'
+        }
     ];
 
     return (
-        <section ref={container} id="dashboard" className="section-padding bg-white">
-            <div className="max-w-7xl mx-auto">
+        <section ref={container} id="dashboard" className="py-16 sm:py-24 md:py-28 bg-gradient-to-b from-white via-white to-accentLight/20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
                 <div className="text-center mb-12 sm:mb-16">
-                    <p className="text-accent font-semibold text-sm uppercase tracking-wider mb-3">Perché ECONOVA AI</p>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-dark">
-                        Progettato per chi fa impresa.
-                    </h2>
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4 sm:mb-6">Perchè ECONOVA-AI?</h2>
+                    <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto">6 motivi per scegliere la nostra piattaforma</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                    {reasons.map((r, i) => (
-                        <div key={i} className="why-item glass-card-strong p-6 sm:p-8 shadow-card hover:shadow-elevated transition-shadow duration-500 group">
-                            <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors">
-                                <r.icon className="w-6 h-6 text-accent" />
+                <div className="why-grid flex gap-4 sm:gap-6 overflow-x-auto pb-4 md:pb-0 snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible scrollbar-hide">
+                    {reasons.map((reason, i) => {
+                        const ReasonIcon = reason.icon;
+                        return (
+                            <div key={i} className="why-item glass-card-strong rounded-2xl p-6 sm:p-8 border border-black/5 hover:border-accent/20 transition-all hover:shadow-glass-lg min-w-[260px] sm:min-w-[280px] md:min-w-0 snap-start">
+                                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4">
+                                    <ReasonIcon className="w-6 h-6 text-accent" />
+                                </div>
+                                <h3 className="text-lg sm:text-xl font-bold text-dark mb-2">{reason.title}</h3>
+                                <p className="text-muted text-sm sm:text-base leading-relaxed">{reason.desc}</p>
                             </div>
-                            <h3 className="text-base sm:text-lg font-bold text-dark mb-2">{r.title}</h3>
-                            <p className="text-xs sm:text-sm text-muted leading-relaxed">{r.desc}</p>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </section>
@@ -813,41 +1003,46 @@ const CTASection = () => {
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            gsap.from(".cta-content", {
-                scrollTrigger: { trigger: container.current, start: "top 70%" },
-                y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+            gsap.from(".cta-el", {
+                y: 30,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: ".cta-container",
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                }
             });
         }, container);
         return () => ctx.revert();
     }, []);
 
     return (
-        <section ref={container} id="contact" className="section-padding bg-subtle">
-            <div className="max-w-4xl mx-auto">
-                <div className="cta-content shimmer-border rounded-[24px] sm:rounded-[32px] p-[1px]">
-                    <div className="bg-white rounded-[23px] sm:rounded-[31px] p-8 sm:p-10 md:p-16 text-center">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-pill bg-accent/10 text-accent text-sm font-medium mb-6 sm:mb-8">
-                            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                            Disponibile ora
-                        </div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-dark mb-4">
-                            Pronto a vedere i tuoi dati
-                            <br />in modo nuovo?
-                        </h2>
-                        <p className="text-muted text-base sm:text-lg max-w-xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-                            Prenota una demo gratuita di 30 minuti. Ti mostriamo come ECAI-Budget
-                            e Report VSME possono trasformare la gestione della tua PMI.
-                        </p>
-                        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                            <a href="mailto:info@econova.ai" className="btn-primary text-base">
-                                Prenota una Demo <ArrowRight className="w-5 h-5" />
-                            </a>
-                            <a href="mailto:info@econova.ai" className="btn-secondary text-base">
-                                Contattaci
-                            </a>
-                        </div>
-                        <p className="text-xs text-muted mt-6">Nessun impegno. Nessuna carta di credito.</p>
-                    </div>
+        <section ref={container} id="contact" className="py-16 sm:py-24 md:py-32 bg-gradient-to-br from-dark to-dark/95 relative overflow-hidden">
+            <div className="absolute inset-0 opacity-10" style={{
+                backgroundImage: 'radial-gradient(circle at 20% 50%, #7AC943 0%, transparent 50%)',
+            }} />
+            <div className="absolute inset-0 opacity-10" style={{
+                backgroundImage: 'radial-gradient(circle at 80% 80%, #2B7A0E 0%, transparent 50%)',
+            }} />
+
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12 relative z-10 text-center">
+                <h2 className="cta-el text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+                    Trasforma il tuo Controllo di Gestione
+                </h2>
+                <p className="cta-el text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed">
+                    Scopri come ECAI-Budget e Report VSME ESG possono automatizzare il tuo budget e assicurare la compliance ESG.
+                </p>
+
+                <div className="cta-container flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
+                    <a href="#contact" className="cta-el btn-primary text-base px-8 py-3">
+                        Prenota una Demo <ArrowRight className="w-5 h-5" />
+                    </a>
+                    <a href="#" className="cta-el border-2 border-white text-white hover:bg-white hover:text-dark px-8 py-2.5 rounded-xl font-semibold transition-all text-base">
+                        Scarica Documentazione
+                    </a>
                 </div>
             </div>
         </section>
@@ -855,54 +1050,86 @@ const CTASection = () => {
 };
 
 /* ─── FOOTER ─── */
-const Footer = () => {
-    return (
-        <footer className="bg-dark text-white/80 py-12 sm:py-16 px-4 sm:px-6 md:px-12">
-            <div className="max-w-7xl mx-auto">
-                <div className="flex flex-col md:flex-row justify-between gap-8 sm:gap-12 pb-8 sm:pb-12 border-b border-white/10">
-                    <div className="max-w-xs">
-                        <div className="mb-4">
-                            <EconovaLogo className="h-8" white={true} />
-                        </div>
-                        <p className="text-white/50 text-sm leading-relaxed">
-                            AI per il controllo di gestione e la sostenibilità delle PMI italiane.
-                        </p>
+const Footer = () => (
+    <footer className="bg-dark text-white py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-12 sm:mb-16">
+                {/* Brand */}
+                <div className="col-span-2 md:col-span-1">
+                    <div className="mb-6 h-8 sm:h-9">
+                        <EconovaLogo className="h-full" white={true} />
                     </div>
+                    <p className="text-white/70 text-sm mb-6">Piattaforme AI per il controllo di gestione e la sostenibilità delle PMI.</p>
 
-                    <div className="flex gap-12 sm:gap-16">
-                        <div>
-                            <div className="text-xs uppercase tracking-widest text-white/30 font-semibold mb-4">Prodotti</div>
-                            <div className="flex flex-col gap-3">
-                                <a href="#budget" className="text-sm text-white/60 hover:text-white transition-colors">ECAI-Budget</a>
-                                <a href="#vsme" className="text-sm text-white/60 hover:text-white transition-colors">Report VSME ESG</a>
-                            </div>
-                        </div>
-                        <div>
-                            <div className="text-xs uppercase tracking-widest text-white/30 font-semibold mb-4">Azienda</div>
-                            <div className="flex flex-col gap-3">
-                                <a href="mailto:info@econova.ai" className="text-sm text-white/60 hover:text-white transition-colors">Contatti</a>
-                                <a href="#" className="text-sm text-white/60 hover:text-white transition-colors">Privacy Policy</a>
-                            </div>
-                        </div>
+                    {/* NVIDIA Badge */}
+                    <div className="flex items-center gap-3">
+                        <img
+                            src="/nvidia-badge.svg"
+                            alt="NVIDIA Inception Program"
+                            className="h-12 object-contain"
+                        />
+                        <span className="text-xs text-white/70">Member of NVIDIA<br />Inception Program</span>
                     </div>
                 </div>
 
-                <div className="pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/30">
-                    <div>© 2026 ECONOVA AI S.r.l. — P.IVA IT 02814630410</div>
-                    <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_6px_rgba(34,197,94,0.6)]" />
-                        <span className="font-mono">Tutti i sistemi operativi</span>
+                {/* Products */}
+                <div>
+                    <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Prodotti</h4>
+                    <ul className="space-y-2 text-sm">
+                        <li><a href="#budget" className="text-white/70 hover:text-white transition-colors">ECAI-Budget</a></li>
+                        <li><a href="#vsme" className="text-white/70 hover:text-white transition-colors">Report VSME ESG</a></li>
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+
+                {/* Company */}
+                <div>
+                    <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Azienda</h4>
+                    <ul className="space-y-2 text-sm">
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Chi Siamo</a></li>
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Carriere</a></li>
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Contatti</a></li>
+                    </ul>
+                </div>
+
+                {/* Legal */}
+                <div>
+                    <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Legal</h4>
+                    <ul className="space-y-2 text-sm">
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Cookie Policy</a></li>
+                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">GDPR</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            {/* Divider */}
+            <div className="border-t border-white/10 pt-8 sm:pt-12">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p className="text-white/60 text-xs sm:text-sm">© 2024 ECONOVA. Tutti i diritti riservati.</p>
+                    <div className="flex items-center gap-6 text-white/60">
+                        <a href="#" className="hover:text-white transition-colors">
+                            <span className="sr-only">LinkedIn</span>
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.39v-1.2h-2.5v8.5h2.5v-4.34c0-.77.62-1.4 1.4-1.4a1.4 1.4 0 0 1 1.4 1.4v4.34h2.5M6.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-1 13h2.5V8h-2.5v14z"/></svg>
+                        </a>
+                        <a href="#" className="hover:text-white transition-colors">
+                            <span className="sr-only">Twitter</span>
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.87.39-1.8.65-2.77.77 1-.6 1.76-1.55 2.12-2.68-.93.55-1.96.95-3.06 1.17-.88-.94-2.13-1.53-3.51-1.53-2.66 0-4.81 2.16-4.81 4.81 0 .38.04.75.13 1.1-4-.2-7.63-2.14-10.03-5.08-.42.72-.66 1.56-.66 2.46 0 1.67.85 3.14 2.14 4.01-.79-.03-1.54-.24-2.19-.6v.06c0 2.33 1.66 4.28 3.86 4.72-.4.11-.83.17-1.27.17-.31 0-.62-.03-.92-.08.62 1.91 2.4 3.3 4.5 3.34-1.65 1.29-3.73 2.06-5.99 2.06-.39 0-.77-.02-1.15-.07 2.14 1.37 4.68 2.17 7.39 2.17 8.87 0 13.7-7.35 13.7-13.7 0-.21 0-.42-.01-.62.94-.68 1.76-1.53 2.41-2.5z"/></svg>
+                        </a>
                     </div>
                 </div>
             </div>
-        </footer>
-    );
-};
+        </div>
+    </footer>
+);
 
-/* ─── APP ─── */
+/* ─── MAIN APP ─── */
 export default function App() {
     return (
-        <div className="bg-white text-dark selection:bg-accent/20 selection:text-dark relative min-h-screen">
+        <div className="bg-white">
             <Navbar />
             <Hero />
             <ProductsOverview />
