@@ -10,7 +10,7 @@
   }
 
   ::selection {
-    background: rgba(0, 113, 227, 0.15);
+    background: rgba(43, 122, 14, 0.15);
     color: #1d1d1f;
   }
 }
@@ -35,8 +35,8 @@
 /* Gradient mesh background */
 .mesh-gradient {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(0, 113, 227, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(88, 86, 214, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 50%, rgba(43, 122, 14, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(122, 201, 67, 0.05) 0%, transparent 50%),
     radial-gradient(ellipse at 60% 80%, rgba(52, 199, 89, 0.04) 0%, transparent 50%),
     #ffffff;
 }
@@ -44,8 +44,8 @@
 /* Soft gradient for hero */
 .hero-gradient {
   background:
-    radial-gradient(ellipse at 30% 40%, rgba(0, 113, 227, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 60%, rgba(88, 86, 214, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 40%, rgba(43, 122, 14, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(122, 201, 67, 0.05) 0%, transparent 60%),
     #ffffff;
 }
 
@@ -67,7 +67,7 @@
 }
 .btn-primary:hover {
   transform: scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 113, 227, 0.3);
+  box-shadow: 0 8px 24px rgba(43, 122, 14, 0.3);
 }
 
 .btn-secondary {
@@ -106,7 +106,7 @@
 }
 
 .shimmer-border {
-  background: linear-gradient(90deg, rgba(0,113,227,0.1), rgba(88,86,214,0.1), rgba(52,199,89,0.1), rgba(0,113,227,0.1));
+  background: linear-gradient(90deg, rgba(43,122,14,0.15), rgba(122,201,67,0.15), rgba(52,199,89,0.1), rgba(43,122,14,0.15));
   background-size: 300% 100%;
   animation: shimmer 8s ease-in-out infinite;
 }
@@ -124,4 +124,9 @@
 .float-animation-delayed {
   animation: float 6s ease-in-out infinite;
   animation-delay: -3s;
+}
+
+/* VSME Sidebar green gradient */
+.vsme-sidebar {
+  background: linear-gradient(180deg, #2B7A0E 0%, #1a5c06 100%);
 }
