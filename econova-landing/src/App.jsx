@@ -5,14 +5,11 @@ import { ArrowRight, ArrowUpRight, BarChart3, FileText, Shield, Zap, TrendingUp,
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── ECONOVA LOGO ─── */
-const EconovaLogo = ({ className = "h-9", white = false }) => (
-    <a href="#" className={className}>
-        <img
-            src="/econova-logo.svg"
-            alt="Econova"
-            className={`h-full w-auto object-contain ${white ? 'invert brightness-0 brightness-100' : ''}`}
-        />
+/* ─── ECONOVA LOGO (text-based) ─── */
+const EconovaLogo = ({ className = "", white = false }) => (
+    <a href="#" className={`flex items-center gap-0.5 font-extrabold text-xl sm:text-2xl tracking-tight ${className}`}>
+        <span className={white ? 'text-white' : 'text-accent'}>ECONOVA</span>
+        <span className={white ? 'text-white/70' : 'text-accentLime'}>-AI</span>
     </a>
 );
 
@@ -30,7 +27,7 @@ const Navbar = () => {
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/80 backdrop-blur-xl border-b border-black/[0.04] shadow-soft' : 'bg-transparent'}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between h-16 md:h-20">
-                <EconovaLogo className="h-8 sm:h-9" />
+                <EconovaLogo />
 
                 <div className="hidden md:flex items-center gap-8 lg:gap-10 text-sm font-medium text-muted">
                     <a href="#budget" className="hover:text-dark transition-colors">ECAI-Budget</a>
@@ -190,37 +187,17 @@ const Hero = () => {
 
 /* ─── PRODUCTS OVERVIEW ─── */
 const ProductsOverview = () => {
-    const container = useRef();
-
-    useLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            gsap.from(".product-card", {
-                y: 40,
-                opacity: 0,
-                stagger: 0.2,
-                duration: 0.8,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: ".products-grid",
-                    start: "top 75%",
-                    toggleActions: "play none none none"
-                }
-            });
-        }, container);
-        return () => ctx.revert();
-    }, []);
-
     return (
-        <section ref={container} className="py-16 sm:py-24 md:py-28 bg-gradient-to-b from-white to-accentLight/30 relative overflow-hidden">
+        <section className="py-16 sm:py-24 md:py-28 bg-gradient-to-b from-white to-accentLight/30 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
                 <div className="text-center mb-12 sm:mb-16">
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4 sm:mb-6">Due piattaforme, infinite possibilità</h2>
                     <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto">Gestisci budget e sostenibilità con l'intelligenza artificiale</p>
                 </div>
 
-                <div className="products-grid grid md:grid-cols-2 gap-6 sm:gap-8">
+                <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
                     {/* ECAI-Budget Product Card */}
-                    <div className="product-card glass-card-strong rounded-2xl p-6 sm:p-8 border border-black/5 hover:border-accent/20 transition-all duration-300 hover:shadow-glass-xl overflow-hidden relative group">
+                    <div className="fade-in-up glass-card-strong rounded-2xl p-6 sm:p-8 border border-black/5 hover:border-accent/20 transition-all duration-300 hover:shadow-glass-xl overflow-hidden relative group">
                         <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-500" />
 
                         <div className="relative z-10">
@@ -254,7 +231,7 @@ const ProductsOverview = () => {
                     </div>
 
                     {/* Report VSME ESG Product Card */}
-                    <div className="product-card glass-card-strong rounded-2xl p-6 sm:p-8 border border-black/5 hover:border-accent/20 transition-all duration-300 hover:shadow-glass-xl overflow-hidden relative group">
+                    <div className="fade-in-up delay-200 glass-card-strong rounded-2xl p-6 sm:p-8 border border-black/5 hover:border-accent/20 transition-all duration-300 hover:shadow-glass-xl overflow-hidden relative group">
                         <div className="absolute -top-20 -right-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-500" />
 
                         <div className="relative z-10">
@@ -329,7 +306,16 @@ const BudgetDashboard = () => {
                     <p className="text-muted text-base sm:text-lg">Controllo di gestione intelligente in tempo reale</p>
                 </div>
 
-                <div className="dashboard-container dashboard-el glass-card-strong rounded-3xl p-6 sm:p-8 md:p-10 border border-black/5 shadow-glass-xl overflow-hidden">
+                <div className="dashboard-container dashboard-el glass-card-strong rounded-3xl border border-black/5 shadow-glass-xl overflow-hidden">
+                    {/* Mac Window Chrome */}
+                    <div className="flex items-center gap-2 px-5 py-3 bg-gray-50 border-b border-black/5">
+                        <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
+                        <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                        <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
+                        <span className="ml-3 text-xs text-muted font-mono">www.econova.ai — ECAI-Budget</span>
+                    </div>
+
+                    <div className="p-6 sm:p-8 md:p-10">
                     {/* Dashboard Header */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-black/5">
                         <div>
@@ -365,6 +351,7 @@ const BudgetDashboard = () => {
                         {activeTab === 'analysis' && <BudgetAnalysisTab />}
                         {activeTab === 'forecast' && <BudgetForecastTab />}
                     </div>
+                    </div>{/* end padding wrapper */}
                 </div>
             </div>
         </section>
@@ -724,7 +711,7 @@ const BudgetForecastTab = () => (
 /* ─── VSME DASHBOARD ─── */
 const VsmeDashboard = () => {
     const container = useRef();
-    const [activeModule, setActiveModule] = useState('acqua');
+    const [activeModule, setActiveModule] = useState('forza-lavoro');
 
     useLayoutEffect(() => {
         let ctx = gsap.context(() => {
@@ -745,35 +732,47 @@ const VsmeDashboard = () => {
     }, []);
 
     const modules = [
-        { id: 'acqua', name: 'Acqua', icon: Droplets, pct: 72 },
-        { id: 'energia', name: 'Energia', icon: Flame, pct: 58 },
-        { id: 'rifiuti', name: 'Rifiuti', icon: Recycle, pct: 45 },
-        { id: 'persone', name: 'Persone', icon: Users, pct: 68 }
+        { id: 'forza-lavoro', name: 'Forza Lavoro', icon: Users, pct: 42 },
+        { id: 'efficienza-energetica', name: 'Efficienza Energetica', icon: Flame, pct: 35 },
+        { id: 'acqua', name: 'Acqua', icon: Droplets, pct: 28 },
+        { id: 'rifiuti', name: 'Rifiuti', icon: Recycle, pct: 18 },
+        { id: 'biodiversita', name: 'Biodiversità', icon: Trees, pct: 12 },
+        { id: 'refrigeranti', name: 'Refrigeranti', icon: Thermometer, pct: 8 }
     ];
 
     const moduleData = {
-        acqua: {
-            title: 'Gestione dell\'Acqua',
-            subtitle: 'Monitoraggio consumi e compliance normativa',
-            icon: Droplets,
+        'forza-lavoro': {
+            title: 'Forza Lavoro',
+            subtitle: 'Gestione dipendenti, formazione e welfare aziendale',
+            icon: Users,
             metrics: [
-                { label: 'Consumo Totale', value: '2,450 m³', unit: 'al mese', status: 'normal' },
-                { label: 'Riciclo', value: '34%', unit: 'dell\'acqua utilisata', status: 'good' },
-                { label: 'Conformità', value: 'ISO 14001', unit: 'certificazione attiva', status: 'good' }
+                { label: 'Dipendenti', value: '245', unit: 'in organico', status: 'normal' },
+                { label: 'Ore Formazione', value: '32h', unit: 'per dipendente/anno', status: 'good' },
+                { label: 'Gender Diversity', value: '42%', unit: 'donne in azienda', status: 'good' }
             ]
         },
-        energia: {
-            title: 'Gestione Energia',
+        'efficienza-energetica': {
+            title: 'Efficienza Energetica',
             subtitle: 'Ottimizzazione consumi ed energie rinnovabili',
             icon: Flame,
             metrics: [
                 { label: 'Consumo Totale', value: '450 MWh', unit: 'al mese', status: 'normal' },
                 { label: 'Rinnovabili', value: '28%', unit: 'della produzione', status: 'good' },
-                { label: 'Efficienza', value: '-12%', unit: 'vs anno precedente', status: 'good' }
+                { label: 'Riduzione', value: '-12%', unit: 'vs anno precedente', status: 'good' }
+            ]
+        },
+        acqua: {
+            title: 'Acqua',
+            subtitle: 'Monitoraggio consumi idrici e compliance',
+            icon: Droplets,
+            metrics: [
+                { label: 'Consumo Totale', value: '2,450 m³', unit: 'al mese', status: 'normal' },
+                { label: 'Riciclo', value: '34%', unit: "dell'acqua utilizzata", status: 'good' },
+                { label: 'Conformità', value: 'ISO 14001', unit: 'certificazione attiva', status: 'good' }
             ]
         },
         rifiuti: {
-            title: 'Gestione Rifiuti',
+            title: 'Rifiuti',
             subtitle: 'Tracciamento e smaltimento responsabile',
             icon: Recycle,
             metrics: [
@@ -782,19 +781,29 @@ const VsmeDashboard = () => {
                 { label: 'Conformità', value: 'EMAS', unit: 'registrazione valida', status: 'good' }
             ]
         },
-        persone: {
-            title: 'Capitale Umano',
-            subtitle: 'Welfare, formazione e inclusione',
-            icon: Users,
+        biodiversita: {
+            title: 'Biodiversità',
+            subtitle: 'Impatto ambientale e tutela ecosistemi',
+            icon: Trees,
             metrics: [
-                { label: 'Dipendenti', value: '245', unit: 'in organico', status: 'normal' },
-                { label: 'Ore Formazione', value: '32', unit: 'per dipendente/anno', status: 'good' },
-                { label: 'Diversity', value: '42%', unit: 'donne in azienda', status: 'good' }
+                { label: 'Area Protetta', value: '12 ha', unit: 'terreni aziendali', status: 'normal' },
+                { label: 'Specie Monitorate', value: '24', unit: 'nella zona', status: 'good' },
+                { label: 'Piano Tutela', value: 'Attivo', unit: 'in corso', status: 'good' }
+            ]
+        },
+        refrigeranti: {
+            title: 'Refrigeranti',
+            subtitle: 'Monitoraggio gas refrigeranti e F-gas',
+            icon: Thermometer,
+            metrics: [
+                { label: 'Gas Totali', value: '8.2 kg', unit: 'in uso', status: 'normal' },
+                { label: 'GWP Medio', value: '1,430', unit: 'CO₂ equivalente', status: 'good' },
+                { label: 'Perdite', value: '0.3%', unit: 'tasso annuo', status: 'good' }
             ]
         }
     };
 
-    const currentData = moduleData[activeModule] || moduleData['acqua'];
+    const currentData = moduleData[activeModule] || moduleData['forza-lavoro'];
     const completionTotal = Math.round(modules.reduce((sum, m) => sum + m.pct, 0) / modules.length);
 
     return (
@@ -805,7 +814,16 @@ const VsmeDashboard = () => {
                     <p className="text-muted text-base sm:text-lg">Sostenibilità e compliance ESG semplificate</p>
                 </div>
 
-                <div className="vsme-container grid lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+                <div className="vsme-container glass-card-strong rounded-3xl border border-black/5 shadow-glass-xl overflow-hidden">
+                    {/* Mac Window Chrome */}
+                    <div className="flex items-center gap-2 px-5 py-3 bg-gray-50 border-b border-black/5">
+                        <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
+                        <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+                        <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
+                        <span className="ml-3 text-xs text-muted font-mono">www.econova.ai — VSME Report</span>
+                    </div>
+
+                    <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 items-stretch p-6 sm:p-8">
                     {/* Sidebar */}
                     <div className="lg:col-span-1 space-y-3">
                         <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-glass">
@@ -909,6 +927,7 @@ const VsmeDashboard = () => {
                             </div>
                         </div>
                     </div>
+                    </div>{/* end grid padding wrapper */}
                 </div>
             </div>
         </section>
@@ -917,26 +936,6 @@ const VsmeDashboard = () => {
 
 /* ─── WHY SECTION ─── */
 const WhySection = () => {
-    const container = useRef();
-
-    useLayoutEffect(() => {
-        let ctx = gsap.context(() => {
-            gsap.from(".why-item", {
-                y: 30,
-                opacity: 0,
-                stagger: 0.15,
-                duration: 0.8,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: ".why-grid",
-                    start: "top 70%",
-                    toggleActions: "play none none none"
-                }
-            });
-        }, container);
-        return () => ctx.revert();
-    }, []);
-
     const reasons = [
         {
             icon: Brain,
@@ -971,18 +970,18 @@ const WhySection = () => {
     ];
 
     return (
-        <section ref={container} id="dashboard" className="py-16 sm:py-24 md:py-28 bg-gradient-to-b from-white via-white to-accentLight/20">
+        <section id="dashboard" className="py-16 sm:py-24 md:py-28 bg-gradient-to-b from-white via-white to-accentLight/20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
                 <div className="text-center mb-12 sm:mb-16">
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4 sm:mb-6">Perchè ECONOVA-AI?</h2>
                     <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto">6 motivi per scegliere la nostra piattaforma</p>
                 </div>
 
-                <div className="why-grid flex gap-4 sm:gap-6 overflow-x-auto pb-4 md:pb-0 snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible scrollbar-hide">
+                <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 md:pb-0 snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible scrollbar-hide">
                     {reasons.map((reason, i) => {
                         const ReasonIcon = reason.icon;
                         return (
-                            <div key={i} className="why-item glass-card-strong rounded-2xl p-6 sm:p-8 border border-black/5 hover:border-accent/20 transition-all hover:shadow-glass-lg min-w-[260px] sm:min-w-[280px] md:min-w-0 snap-start">
+                            <div key={i} className="fade-in-up glass-card-strong rounded-2xl p-6 sm:p-8 border border-black/5 hover:border-accent/20 transition-all hover:shadow-glass-lg min-w-[260px] sm:min-w-[280px] md:min-w-0 snap-start" style={{ animationDelay: `${i * 100}ms` }}>
                                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4">
                                     <ReasonIcon className="w-6 h-6 text-accent" />
                                 </div>
@@ -1020,19 +1019,12 @@ const CTASection = () => {
     }, []);
 
     return (
-        <section ref={container} id="contact" className="py-16 sm:py-24 md:py-32 bg-gradient-to-br from-dark to-dark/95 relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10" style={{
-                backgroundImage: 'radial-gradient(circle at 20% 50%, #7AC943 0%, transparent 50%)',
-            }} />
-            <div className="absolute inset-0 opacity-10" style={{
-                backgroundImage: 'radial-gradient(circle at 80% 80%, #2B7A0E 0%, transparent 50%)',
-            }} />
-
+        <section ref={container} id="contact" className="py-16 sm:py-24 md:py-32 bg-gradient-to-b from-accentLight/20 to-white relative overflow-hidden">
             <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12 relative z-10 text-center">
-                <h2 className="cta-el text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+                <h2 className="cta-el text-3xl sm:text-4xl md:text-5xl font-bold text-dark mb-4 sm:mb-6 leading-tight">
                     Trasforma il tuo Controllo di Gestione
                 </h2>
-                <p className="cta-el text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed">
+                <p className="cta-el text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed">
                     Scopri come ECAI-Budget e Report VSME ESG possono automatizzare il tuo budget e assicurare la compliance ESG.
                 </p>
 
@@ -1040,7 +1032,7 @@ const CTASection = () => {
                     <a href="#contact" className="cta-el btn-primary text-base px-8 py-3">
                         Prenota una Demo <ArrowRight className="w-5 h-5" />
                     </a>
-                    <a href="#" className="cta-el border-2 border-white text-white hover:bg-white hover:text-dark px-8 py-2.5 rounded-xl font-semibold transition-all text-base">
+                    <a href="#" className="cta-el border-2 border-accent text-accent hover:bg-accent hover:text-white px-8 py-2.5 rounded-xl font-semibold transition-all text-base">
                         Scarica Documentazione
                     </a>
                 </div>
@@ -1051,15 +1043,15 @@ const CTASection = () => {
 
 /* ─── FOOTER ─── */
 const Footer = () => (
-    <footer className="bg-dark text-white py-12 sm:py-16">
+    <footer className="bg-white border-t border-black/5 py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-12 sm:mb-16">
                 {/* Brand */}
                 <div className="col-span-2 md:col-span-1">
-                    <div className="mb-6 h-8 sm:h-9">
-                        <EconovaLogo className="h-full" white={true} />
+                    <div className="mb-6">
+                        <EconovaLogo />
                     </div>
-                    <p className="text-white/70 text-sm mb-6">Piattaforme AI per il controllo di gestione e la sostenibilità delle PMI.</p>
+                    <p className="text-muted text-sm mb-6">Piattaforme AI per il controllo di gestione e la sostenibilità delle PMI.</p>
 
                     {/* NVIDIA Badge */}
                     <div className="flex items-center gap-3">
@@ -1068,54 +1060,54 @@ const Footer = () => (
                             alt="NVIDIA Inception Program"
                             className="h-12 object-contain"
                         />
-                        <span className="text-xs text-white/70">Member of NVIDIA<br />Inception Program</span>
+                        <span className="text-xs text-muted">Member of NVIDIA<br />Inception Program</span>
                     </div>
                 </div>
 
                 {/* Products */}
                 <div>
-                    <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Prodotti</h4>
+                    <h4 className="font-semibold text-dark mb-4 text-sm uppercase tracking-wider">Prodotti</h4>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#budget" className="text-white/70 hover:text-white transition-colors">ECAI-Budget</a></li>
-                        <li><a href="#vsme" className="text-white/70 hover:text-white transition-colors">Report VSME ESG</a></li>
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Pricing</a></li>
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#budget" className="text-muted hover:text-dark transition-colors">ECAI-Budget</a></li>
+                        <li><a href="#vsme" className="text-muted hover:text-dark transition-colors">Report VSME ESG</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">Pricing</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">FAQ</a></li>
                     </ul>
                 </div>
 
                 {/* Company */}
                 <div>
-                    <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Azienda</h4>
+                    <h4 className="font-semibold text-dark mb-4 text-sm uppercase tracking-wider">Azienda</h4>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Chi Siamo</a></li>
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Blog</a></li>
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Carriere</a></li>
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Contatti</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">Chi Siamo</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">Blog</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">Carriere</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">Contatti</a></li>
                     </ul>
                 </div>
 
                 {/* Legal */}
                 <div>
-                    <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Legal</h4>
+                    <h4 className="font-semibold text-dark mb-4 text-sm uppercase tracking-wider">Legal</h4>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Terms of Service</a></li>
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">Cookie Policy</a></li>
-                        <li><a href="#" className="text-white/70 hover:text-white transition-colors">GDPR</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">Terms of Service</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">Cookie Policy</a></li>
+                        <li><a href="#" className="text-muted hover:text-dark transition-colors">GDPR</a></li>
                     </ul>
                 </div>
             </div>
 
             {/* Divider */}
-            <div className="border-t border-white/10 pt-8 sm:pt-12">
+            <div className="border-t border-black/5 pt-8 sm:pt-12">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <p className="text-white/60 text-xs sm:text-sm">© 2024 ECONOVA. Tutti i diritti riservati.</p>
-                    <div className="flex items-center gap-6 text-white/60">
-                        <a href="#" className="hover:text-white transition-colors">
+                    <p className="text-muted text-xs sm:text-sm">© 2024 ECONOVA. Tutti i diritti riservati.</p>
+                    <div className="flex items-center gap-6 text-muted">
+                        <a href="#" className="hover:text-dark transition-colors">
                             <span className="sr-only">LinkedIn</span>
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.39v-1.2h-2.5v8.5h2.5v-4.34c0-.77.62-1.4 1.4-1.4a1.4 1.4 0 0 1 1.4 1.4v4.34h2.5M6.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-1 13h2.5V8h-2.5v14z"/></svg>
                         </a>
-                        <a href="#" className="hover:text-white transition-colors">
+                        <a href="#" className="hover:text-dark transition-colors">
                             <span className="sr-only">Twitter</span>
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.87.39-1.8.65-2.77.77 1-.6 1.76-1.55 2.12-2.68-.93.55-1.96.95-3.06 1.17-.88-.94-2.13-1.53-3.51-1.53-2.66 0-4.81 2.16-4.81 4.81 0 .38.04.75.13 1.1-4-.2-7.63-2.14-10.03-5.08-.42.72-.66 1.56-.66 2.46 0 1.67.85 3.14 2.14 4.01-.79-.03-1.54-.24-2.19-.6v.06c0 2.33 1.66 4.28 3.86 4.72-.4.11-.83.17-1.27.17-.31 0-.62-.03-.92-.08.62 1.91 2.4 3.3 4.5 3.34-1.65 1.29-3.73 2.06-5.99 2.06-.39 0-.77-.02-1.15-.07 2.14 1.37 4.68 2.17 7.39 2.17 8.87 0 13.7-7.35 13.7-13.7 0-.21 0-.42-.01-.62.94-.68 1.76-1.53 2.41-2.5z"/></svg>
                         </a>
