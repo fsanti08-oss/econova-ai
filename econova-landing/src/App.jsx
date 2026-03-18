@@ -913,7 +913,7 @@ const VsmeDashboard = () => {
                                 <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200">
                                     <div className="flex items-center gap-3">
                                         <Shield className="w-5 h-5 text-green-600" />
-                                        <span className="text-sm font-medium text-dark">CSRD — Compliance verificata</span>
+                                        <span className="text-sm font-medium text-dark">VSME — Compliance verificata</span>
                                     </div>
                                     <ChevronRight className="w-4 h-4 text-green-600" />
                                 </div>
