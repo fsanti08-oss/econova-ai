@@ -3,15 +3,25 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-white text-dark font-sans;
+    @apply bg-white font-sans;
+    color: #1d1d1f;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background: rgba(43, 122, 14, 0.15);
+    background: rgba(46, 125, 50, 0.15);
     color: #1d1d1f;
+  }
+
+  /* Offset for fixed navbar on anchor scroll */
+  section[id] {
+    scroll-margin-top: 5rem;
   }
 }
 
@@ -35,8 +45,8 @@
 /* Gradient mesh background */
 .mesh-gradient {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(43, 122, 14, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(122, 201, 67, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 50%, rgba(46, 125, 50, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(76, 175, 80, 0.05) 0%, transparent 50%),
     radial-gradient(ellipse at 60% 80%, rgba(52, 199, 89, 0.04) 0%, transparent 50%),
     #ffffff;
 }
@@ -44,8 +54,8 @@
 /* Soft gradient for hero */
 .hero-gradient {
   background:
-    radial-gradient(ellipse at 30% 40%, rgba(43, 122, 14, 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 60%, rgba(122, 201, 67, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 40%, rgba(46, 125, 50, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(76, 175, 80, 0.05) 0%, transparent 60%),
     #ffffff;
 }
 
@@ -63,15 +73,20 @@
 
 /* Smooth button hover */
 .btn-primary {
-  @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-semibold rounded-pill transition-all duration-300;
+  @apply inline-flex items-center justify-center gap-2 px-8 py-4 text-white font-semibold transition-all duration-300;
+  background-color: #2e7d32;
+  border-radius: 100px;
 }
 .btn-primary:hover {
   transform: scale(1.02);
-  box-shadow: 0 8px 24px rgba(43, 122, 14, 0.3);
+  box-shadow: 0 8px 24px rgba(46, 125, 50, 0.3);
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-dark font-semibold rounded-pill border border-border transition-all duration-300;
+  @apply inline-flex items-center justify-center gap-2 px-8 py-4 bg-white font-semibold transition-all duration-300;
+  color: #1d1d1f;
+  border-radius: 100px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 .btn-secondary:hover {
   transform: scale(1.02);
@@ -106,7 +121,7 @@
 }
 
 .shimmer-border {
-  background: linear-gradient(90deg, rgba(43,122,14,0.15), rgba(122,201,67,0.15), rgba(52,199,89,0.1), rgba(43,122,14,0.15));
+  background: linear-gradient(90deg, rgba(46,125,50,0.15), rgba(76,175,80,0.15), rgba(52,199,89,0.1), rgba(46,125,50,0.15));
   background-size: 300% 100%;
   animation: shimmer 8s ease-in-out infinite;
 }
@@ -126,7 +141,7 @@
   animation-delay: -3s;
 }
 
-/* Fade-in-up animation (replaces GSAP for reliability) */
+/* Fade-in-up animation */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
@@ -136,11 +151,27 @@
 }
 .delay-200 { animation-delay: 200ms; }
 
+/* IntersectionObserver reveal system */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-item.delay-1 { transition-delay: 120ms; }
+.reveal-item.delay-2 { transition-delay: 240ms; }
+.reveal-item.delay-3 { transition-delay: 360ms; }
+
 /* Hide scrollbar for carousels */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* VSME Sidebar green gradient */
 .vsme-sidebar {
-  background: linear-gradient(180deg, #2B7A0E 0%, #1a5c06 100%);
+  background: linear-gradient(180deg, #2e7d32 0%, #1a5c06 100%);
 }
