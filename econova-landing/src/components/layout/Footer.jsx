@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom';
 import EconovaLogo from '../ui/EconovaLogo';
 import { footerLinks } from '../../data/navigation';
 
 const Footer = () => (
   <footer className="bg-[#1d1d1f] py-12 sm:py-16">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-12 sm:mb-16">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-12 mb-12 sm:mb-16">
         {/* Brand */}
         <div className="col-span-2 md:col-span-1">
           <div className="mb-6">
@@ -34,6 +35,20 @@ const Footer = () => (
                 <a href={link.href} className="text-white/50 hover:text-white transition-colors">
                   {link.label}
                 </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Services */}
+        <div>
+          <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Services</h4>
+          <ul className="space-y-2 text-sm">
+            {footerLinks.services.map((link) => (
+              <li key={link.label}>
+                <Link to={link.to} className="text-white/50 hover:text-white transition-colors">
+                  {link.label}
+                </Link>
               </li>
             ))}
           </ul>
