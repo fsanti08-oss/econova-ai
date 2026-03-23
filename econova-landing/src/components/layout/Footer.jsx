@@ -60,9 +60,15 @@ const Footer = () => (
           <ul className="space-y-2 text-sm">
             {footerLinks.azienda.map((link) => (
               <li key={link.label}>
-                <a href={link.href} className="text-white/50 hover:text-white transition-colors">
-                  {link.label}
-                </a>
+                {link.to ? (
+                  <Link to={link.to} className="text-white/50 hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a href={link.href} className="text-white/50 hover:text-white transition-colors">
+                    {link.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

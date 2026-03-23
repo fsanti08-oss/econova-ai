@@ -143,11 +143,17 @@ const Navbar = () => {
             </div>
           </div>
 
-          {externalLinks.map((link) => (
-            <a key={link.href} href={link.href} className="hover:text-dark transition-colors">
-              {link.label}
-            </a>
-          ))}
+          {externalLinks.map((link) =>
+            link.to ? (
+              <Link key={link.to} to={link.to} className="hover:text-dark transition-colors">
+                {link.label}
+              </Link>
+            ) : (
+              <a key={link.href} href={link.href} className="hover:text-dark transition-colors">
+                {link.label}
+              </a>
+            )
+          )}
 
           <a href={CTA_DEMO_URL} className="btn-primary !px-6 !py-2.5 !text-sm">
             Prenota Demo
@@ -207,11 +213,17 @@ const Navbar = () => {
           </div>
 
           <p className="text-[10px] font-mono text-muted uppercase tracking-wider mt-4 mb-2">Azienda</p>
-          {externalLinks.map((link) => (
-            <a key={link.href} href={link.href} onClick={closeMobile} className="text-dark font-medium py-2">
-              {link.label}
-            </a>
-          ))}
+          {externalLinks.map((link) =>
+            link.to ? (
+              <Link key={link.to} to={link.to} onClick={closeMobile} className="text-dark font-medium py-2">
+                {link.label}
+              </Link>
+            ) : (
+              <a key={link.href} href={link.href} onClick={closeMobile} className="text-dark font-medium py-2">
+                {link.label}
+              </a>
+            )
+          )}
 
           <a href={CTA_DEMO_URL} onClick={closeMobile} className="btn-primary text-center mt-4">
             Prenota Demo
