@@ -32,6 +32,7 @@ const AIWorkstationsPage = lazy(() => import('./pages/AIWorkstationsPage'));
 const EdgeSolutionsPage = lazy(() => import('./pages/EdgeSolutionsPage'));
 const FormazioneAIPage = lazy(() => import('./pages/FormazioneAIPage'));
 const ChiSiamoPage = lazy(() => import('./pages/ChiSiamoPage'));
+const SocialPage = lazy(() => import('./pages/SocialPage'));
 
 const SectionFallback = () => <div className="min-h-[50vh]" />;
 
@@ -81,6 +82,7 @@ export default function App() {
           <Route path="/edge-solutions" element={<EdgeSolutionsPage />} />
           <Route path="/formazione-ai" element={<FormazioneAIPage />} />
           <Route path="/chi-siamo" element={<ChiSiamoPage />} />
+          <Route path="/social" element={<SocialPage />} />
         </Routes>
       </Suspense>
     </div>

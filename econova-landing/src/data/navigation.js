@@ -15,8 +15,7 @@ export const serviceLinks = [
 
 export const externalLinks = [
   { label: 'Chi Siamo', to: '/chi-siamo' },
-  { label: 'Blog', href: `${ECONOVA_BASE}/blog` },
-  { label: 'Events', href: `${ECONOVA_BASE}/events` },
+  { label: 'Social', to: '/social' },
 ];
 
 export const CTA_DEMO_URL = `${ECONOVA_BASE}/contact`;
@@ -33,8 +32,7 @@ export const footerLinks = {
   ],
   azienda: [
     { label: 'Chi Siamo', to: '/chi-siamo' },
-    { label: 'Blog', href: `${ECONOVA_BASE}/blog` },
-    { label: 'Events', href: `${ECONOVA_BASE}/events` },
+    { label: 'Social', to: '/social' },
     { label: 'Contatti', href: CTA_DEMO_URL },
   ],
   legal: [
