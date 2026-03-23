@@ -1,8 +1,26 @@
-import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Hero from './sections/Hero';
 import Footer from './components/layout/Footer';
+
+/* Scroll to hash after route change (e.g. navigating from /ai-workstations to /#budget) */
+const ScrollToHash = () => {
+  const { hash, pathname } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      // Small delay to let the page render before scrolling
+      const timer = setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [hash, pathname]);
+
+  return null;
+};
 
 const ProductsOverview = lazy(() => import('./sections/ProductsOverview'));
 const BudgetDashboard = lazy(() => import('./sections/BudgetDashboard/BudgetDashboard'));
@@ -54,6 +72,7 @@ const LandingPage = () => (
 export default function App() {
   return (
     <div className="bg-white">
+      <ScrollToHash />
       <Suspense fallback={<SectionFallback />}>
         <Routes>
           <Route path="/" element={<LandingPage />} />

@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown, Monitor, Cpu, GraduationCap } from 'lucide-react';
 import EconovaLogo from '../ui/EconovaLogo';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
@@ -11,6 +11,31 @@ const serviceIcons = {
   '/formazione-ai': GraduationCap,
 };
 
+/* Hash link that works from any page: navigates to home first if needed */
+const NavHashLink = ({ href, onClick, className, children }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    if (onClick) onClick();
+
+    if (location.pathname === '/') {
+      // On home: let native anchor scroll handle it
+      return;
+    }
+
+    // On a sub-page: prevent default, navigate to home with hash
+    e.preventDefault();
+    navigate('/' + href);
+  };
+
+  return (
+    <a href={href} onClick={handleClick} className={className}>
+      {children}
+    </a>
+  );
+};
+
 const Navbar = () => {
   const scrolled = useScrollPosition(50);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -20,10 +45,10 @@ const Navbar = () => {
   const timeoutRef = useRef(null);
   const location = useLocation();
 
-  const closeMobile = () => {
+  const closeMobile = useCallback(() => {
     setMobileOpen(false);
     setMobileServicesOpen(false);
-  };
+  }, []);
 
   /* Close dropdown on outside click */
   useEffect(() => {
@@ -40,7 +65,7 @@ const Navbar = () => {
   useEffect(() => {
     closeMobile();
     setServicesOpen(false);
-  }, [location]);
+  }, [location, closeMobile]);
 
   const handleMouseEnter = () => {
     clearTimeout(timeoutRef.current);
@@ -65,9 +90,9 @@ const Navbar = () => {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-muted">
           {internalLinks.map((link) => (
-            <a key={link.href} href={link.href} className="hover:text-dark transition-colors">
+            <NavHashLink key={link.href} href={link.href} className="hover:text-dark transition-colors">
               {link.label}
-            </a>
+            </NavHashLink>
           ))}
 
           <span className="w-px h-5 bg-black/10" />
@@ -144,13 +169,13 @@ const Navbar = () => {
         <div className="flex flex-col gap-1">
           <p className="text-[10px] font-mono text-muted uppercase tracking-wider mb-2">Piattaforma</p>
           {internalLinks.map((link) => (
-            <a key={link.href} href={link.href} onClick={closeMobile} className="text-dark font-medium py-2">
+            <NavHashLink key={link.href} href={link.href} onClick={closeMobile} className="text-dark font-medium py-2">
               {link.label}
-            </a>
+            </NavHashLink>
           ))}
 
           {/* Services accordion */}
-          <p className="text-[10px] font-mono text-muted uppercase tracking-wider mt-4 mb-2">Services</p>
+          <div className="border-t border-black/[0.04] mt-3 pt-3" />
           <button
             onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
             className="w-full flex items-center justify-between text-dark font-medium py-2"
